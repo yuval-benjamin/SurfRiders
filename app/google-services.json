@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "590053927271",
+    "project_id": "surfriders-ca162",
+    "storage_bucket": "surfriders-ca162.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590053927271:android:39644ecdba07a9c6b0a7c2",
+        "android_client_info": {
+          "package_name": "com.example.surfriders"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFMGdZ6eqK1ve2M5ftQi9riSMxLHHdzF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
