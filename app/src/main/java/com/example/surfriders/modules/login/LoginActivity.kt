@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.surfriders.MainActivity
 import com.example.surfriders.R
 import com.example.surfriders.modules.signup.SignUpActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class LoginActivity : AppCompatActivity() {
 
+    private var auth = Firebase.auth
     private lateinit var emailAddressInputLayout: TextInputLayout
     private lateinit var emailAddressInputEditText: TextInputEditText
 
@@ -71,7 +76,27 @@ class LoginActivity : AppCompatActivity() {
             Log.i("signingSubmit", "email input is: $emailValue")
             Log.i("signingSubmit", "password Input is: $passwordValue")
 
+            auth.signInWithEmailAndPassword(emailValue, passwordValue).addOnSuccessListener {
+                loggedInHandler()
+            }.addOnFailureListener {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Your Email or Password is incorrect!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
+    }
+
+    private fun loggedInHandler() {
+        Toast.makeText(
+            this@LoginActivity,
+            "Welcome ${auth.currentUser?.displayName}!",
+            Toast.LENGTH_SHORT
+        ).show()
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun loginUserValidation(

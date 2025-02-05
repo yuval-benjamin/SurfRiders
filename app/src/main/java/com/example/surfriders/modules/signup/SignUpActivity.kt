@@ -17,12 +17,20 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.RequiresExtension
 import androidx.appcompat.app.AppCompatActivity
+import com.example.surfriders.MainActivity
 import com.example.surfriders.R
+import com.example.surfriders.data.user.User
+import com.example.surfriders.data.user.UserModel
 import com.example.surfriders.modules.login.LoginActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Firebase
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.auth
 
 class SignUpActivity : AppCompatActivity() {
+
+    private val auth = Firebase.auth
 
     private lateinit var imageSelectionCallBack: ActivityResultLauncher<Intent>
     private var imageURI: Uri? = null
@@ -114,7 +122,37 @@ class SignUpActivity : AppCompatActivity() {
             Log.i("signupSubmit", "Email input is:$emailValue")
             Log.i("signupSubmit", "Password Input is:$passwordValue")
             Log.i("signupSubmit", "Password Confirmation Input is:$passwordConfirmationValue")
+            auth.createUserWithEmailAndPassword(emailValue,passwordValue).addOnSuccessListener {
+                val authenticatedUser = it.user!!
 
+                val profileChange = UserProfileChangeRequest.Builder()
+                    .setPhotoUri(imageURI)
+                    .setDisplayName("$firstNameValue $lastNameValue")
+                    .build()
+
+                authenticatedUser.updateProfile(profileChange)
+
+                UserModel.instance.addUser(
+                    User(authenticatedUser.uid, firstNameValue, lastNameValue),
+                    imageURI!!
+                ){
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Register Successful",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }.addOnFailureListener {
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Register Failed, " + it.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
