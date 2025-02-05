@@ -7,13 +7,12 @@ import com.example.surfriders.SurfRidersApplication
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 
-
 @Entity
 class User(
     @PrimaryKey
     val id: String,
-    private val firstName: String,
-    private val lastName: String,
+    val firstName: String,
+    val lastName: String,
     var profileImageUrl: String? = null,
     var lastModified: Long? = null,
 ) {
@@ -35,7 +34,7 @@ class User(
         private const val FIRST_NAME_KEY = "firstName"
         private const val LAST_NAME_KEY = "lastName"
         const val LAST_MODIFIED_KEY = "lastModified"
-        private const val USER_LAST_MODIFIED = "user_last_modified"
+        const val USER_LAST_MODIFIED = "user_last_modified"
 
         fun fromJSON(json: Map<String, Any>): User {
             val id = json[ID_KEY] as? String ?: ""

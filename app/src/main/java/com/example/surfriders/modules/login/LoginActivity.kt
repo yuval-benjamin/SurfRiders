@@ -31,29 +31,29 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("creation","creating signing screen ohad")
+        Log.i("creation", "creating signing screen ohad")
         setContentView(R.layout.login_screen)
-        // Set ui widgets
+
         setUI()
     }
 
-    private fun setUI(){
+    private fun setUI() {
         signinButton = findViewById(R.id.LoginButton)
         forgotPasswordButton = findViewById(R.id.ForgotPasswordPageButton)
         signUpButton = findViewById(R.id.toSignupPageButton)
 
-        signinButton.setOnClickListener{
-            Log.i("buttonClick","signing button clicked in login page")
+        signinButton.setOnClickListener {
+            Log.i("buttonClick", "signing button clicked in login page")
             checkLoginUser()
         }
 
-        signUpButton.setOnClickListener{
-            Log.i("buttonClick","signup button in signing screen clicked")
+        signUpButton.setOnClickListener {
+            Log.i("buttonClick", "signup button in signing screen clicked")
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
-        forgotPasswordButton.setOnClickListener{
-            Log.i("buttonClick","Forgot password button in signing screen clicked")
+        forgotPasswordButton.setOnClickListener {
+            Log.i("buttonClick", "Forgot password button in signing screen clicked")
             val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
@@ -69,9 +69,9 @@ class LoginActivity : AppCompatActivity() {
         passwordInputLayout = findViewById(R.id.layoutLoginTextPassword)
         val passwordValue: String = passwordInputEditText.text.toString().trim()
 
-        val checkUserValidation = loginUserValidation(emailValue,passwordValue)
+        val checkUserValidation = loginUserValidation(emailValue, passwordValue)
 
-        if(checkUserValidation) {
+        if (checkUserValidation) {
             Log.i("buttonClick", "signIn button in signing screen clicked")
             Log.i("signingSubmit", "email input is: $emailValue")
             Log.i("signingSubmit", "password Input is: $passwordValue")
@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUserValidation(
         email: String,
         password: String
-    ):Boolean {
+    ): Boolean {
         if (email.isEmpty()) {
             emailAddressInputLayout.error = "Email cannot be empty"
             return false

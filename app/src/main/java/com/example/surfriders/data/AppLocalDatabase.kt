@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.surfriders.SurfRidersApplication
 import com.example.surfriders.data.user.User
+import com.example.surfriders.data.user.UserDTO
 
 @Database(entities = [User::class], version = 7, exportSchema = true)
 abstract class AppLocalDbRepository : RoomDatabase() {

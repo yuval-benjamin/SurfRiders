@@ -61,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
     @RequiresExtension(extension = Build.VERSION_CODES.R, version = 2)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("creation","creating signup screen")
+        Log.i("creation", "creating signup screen")
         setContentView(R.layout.signup_screen)
 
         backToLogin()
@@ -70,6 +70,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     @RequiresExtension(extension = Build.VERSION_CODES.R, version = 2)
+    @SuppressLint("MissingInflatedId")
     fun setUI() {
         signUpButton = findViewById(R.id.SignupButton)
         pickProfilePictureButton = findViewById(R.id.profilePicButtonSignUpScreen)
@@ -80,8 +81,8 @@ class SignUpActivity : AppCompatActivity() {
         signUpButton.setOnClickListener {
             checkNewUserDetails()
         }
-        signInButton.setOnClickListener{
-            val intent= Intent(this@SignUpActivity, LoginActivity::class.java)
+        signInButton.setOnClickListener {
+            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -113,16 +114,22 @@ class SignUpActivity : AppCompatActivity() {
         passwordConfirmationInputLayout = findViewById(R.id.layoutTextPasswordConfirm)
         val passwordConfirmationValue = passwordConfirmationInputEditText.text.toString().trim()
 
-        val checkUserValidation = userValidation(firstNameValue,lastNameValue,emailValue,passwordValue,passwordConfirmationValue)
+        val checkUserValidation = userValidation(
+            firstNameValue,
+            lastNameValue,
+            emailValue,
+            passwordValue,
+            passwordConfirmationValue
+        )
 
-        if(checkUserValidation) {
+        if (checkUserValidation) {
             Log.i("buttonClick", "Signup button in signup screen clicked")
             Log.i("signupSubmit", "First Name Input is:$firstNameValue")
             Log.i("signupSubmit", "Last Name Input is:$lastNameValue")
             Log.i("signupSubmit", "Email input is:$emailValue")
             Log.i("signupSubmit", "Password Input is:$passwordValue")
             Log.i("signupSubmit", "Password Confirmation Input is:$passwordConfirmationValue")
-            auth.createUserWithEmailAndPassword(emailValue,passwordValue).addOnSuccessListener {
+            auth.createUserWithEmailAndPassword(emailValue, passwordValue).addOnSuccessListener {
                 val authenticatedUser = it.user!!
 
                 val profileChange = UserProfileChangeRequest.Builder()
@@ -135,7 +142,7 @@ class SignUpActivity : AppCompatActivity() {
                 UserModel.instance.addUser(
                     User(authenticatedUser.uid, firstNameValue, lastNameValue),
                     imageURI!!
-                ){
+                ) {
                     Toast.makeText(
                         this@SignUpActivity,
                         "Register Successful",
@@ -238,29 +245,35 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun defineImageSelectionCallBack() {
-        imageSelectionCallBack = registerForActivityResult( StartActivityForResult()) { result: ActivityResult ->
-            try {
-                val imageUri: Uri? = result.data?.data
-                if (imageUri != null) {
-                    val imageSize = getImageSize(imageUri)
-                    val maxCanvasSize = 5 * 1024 * 1024 // 5MB
-                    if (imageSize > maxCanvasSize) {
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            "Selected image is too large",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        pickProfilePictureButton.setImageURI(imageUri)
-                        imageURI = imageUri
-                    }
+        imageSelectionCallBack =
+            registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
+                try {
+                    val imageUri: Uri? = result.data?.data
+                    if (imageUri != null) {
+                        val imageSize = getImageSize(imageUri)
+                        val maxCanvasSize = 5 * 1024 * 1024 // 5MB
+                        if (imageSize > maxCanvasSize) {
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Selected image is too large",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            pickProfilePictureButton.setImageURI(imageUri)
+                            imageURI = imageUri
+                        }
 
-                } else {
-                    Toast.makeText(this@SignUpActivity, "No Image Selected", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@SignUpActivity, "No Image Selected", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Error processing result",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } catch (e: Exception) {
-                Toast.makeText(this@SignUpActivity, "Error processing result", Toast.LENGTH_SHORT).show()
             }
-        }
     }
 }
