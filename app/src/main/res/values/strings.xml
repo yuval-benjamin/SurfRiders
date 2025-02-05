@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SurfRiders</string>
+    <string name="welcome_to_surfriders">Welcome to SurfRiders!</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="signup">SignUp</string>
+    <string name="send_email">Send Email</string>
+    <string name="remember_your_password">Remmember your password?</string>
 </resources>
