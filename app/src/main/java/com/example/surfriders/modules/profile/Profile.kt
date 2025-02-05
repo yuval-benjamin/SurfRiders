@@ -48,9 +48,9 @@ class Profile : Fragment() {
 //        root.findViewById<Button>(R.id.MyReviewsButton).setOnClickListener {
 //            Navigation.findNavController(root).navigate(R.id.action_profile_to_my_cocktails_reviews)
 //        }
-//        root.findViewById<Button>(R.id.EditProfileButton).setOnClickListener {
-//            Navigation.findNavController(root).navigate(R.id.action_profile_to_edit_profile)
-//        }
+        root.findViewById<Button>(R.id.EditProfileButton).setOnClickListener {
+            Navigation.findNavController(root).navigate(R.id.action_profile_to_edit_profile)
+        }
         root.findViewById<Button>(R.id.LogoutButton).setOnClickListener {
             logOut()
         }

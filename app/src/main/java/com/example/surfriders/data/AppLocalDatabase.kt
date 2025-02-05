@@ -20,7 +20,7 @@ object AppLocalDatabase {
         Room.databaseBuilder(
             context,
             AppLocalDbRepository::class.java,
-            "SurfRiders"
+            "surfriders"
         ).fallbackToDestructiveMigration()
             .build()
     }

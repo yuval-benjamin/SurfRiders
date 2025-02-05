@@ -70,28 +70,17 @@ class UserModel private constructor() {
         firebaseModel.getImage(imageId, callback);
     }
 
-    fun addUser(user: User, imageUri: Uri, callback: () -> Unit) {
-        Log.d("FirebaseUpload", "Inside add user function: $User")
-
-//        try {
-//            firebaseModel.addUser(user) {
-//                firebaseModel.addUserImage(user.id, ImageUri) {
-//                    Log.d("FirebaseUpload", "inside the addUserImage")
-//                    refreshAllUsers()
-//                    callback()
-//                }
-//            }
-//        }  catch (e: Exception) {
-//            Log.d("userModel", "Error: $e")
-//        }
-
-        firebaseModel.addUser(user) {
-            Log.d("FirebaseUpload", "Inside add user2: $User")
-            firebaseModel.addUserImage(user.id, imageUri) {
-                Log.d("FirebaseUpload", "inside the addUserImage")
-                refreshAllUsers()
-                callback()
+    fun addUser(user: User, ImageUri: Uri, callback: () -> Unit) {
+        try {
+            firebaseModel.addUser(user) {
+                firebaseModel.addUserImage(user.id, ImageUri) {
+                    refreshAllUsers()
+                    callback()
+                }
             }
+        }  catch (e: Exception) {
+            Log.d("userModel", "Error: $e")
         }
     }
+
 }
