@@ -8,4 +8,9 @@
     <string name="signup">SignUp</string>
     <string name="send_email">Send Email</string>
     <string name="remember_your_password">Remmember your password?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="pick_profile_picture">pick profile logo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

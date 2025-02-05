@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.surfriders.R
 import com.example.surfriders.modules.signup.SignUpActivity
@@ -38,17 +37,17 @@ class LoginActivity : AppCompatActivity() {
         forgotPasswordButton = findViewById(R.id.ForgotPasswordPageButton)
         signUpButton = findViewById(R.id.toSignupPageButton)
 
-        signinButton?.setOnClickListener{
+        signinButton.setOnClickListener{
             Log.i("buttonClick","signing button clicked in login page")
             checkLoginUser()
         }
 
-        signUpButton?.setOnClickListener{
+        signUpButton.setOnClickListener{
             Log.i("buttonClick","signup button in signing screen clicked")
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
-        forgotPasswordButton?.setOnClickListener{
+        forgotPasswordButton.setOnClickListener{
             Log.i("buttonClick","Forgot password button in signing screen clicked")
             val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
             startActivity(intent)
@@ -59,11 +58,11 @@ class LoginActivity : AppCompatActivity() {
 
         emailAddressInputLayout = findViewById(R.id.layoutLoginTextEmail)
         emailAddressInputEditText = findViewById(R.id.editLoginTextEmailAddress)
-        val emailValue: String = emailAddressInputEditText?.text.toString().trim()
+        val emailValue: String = emailAddressInputEditText.text.toString().trim()
 
         passwordInputEditText = findViewById(R.id.editLoginTextPassword)
         passwordInputLayout = findViewById(R.id.layoutLoginTextPassword)
-        val passwordValue: String = passwordInputEditText?.text.toString().trim()
+        val passwordValue: String = passwordInputEditText.text.toString().trim()
 
         val checkUserValidation = loginUserValidation(emailValue,passwordValue)
 
@@ -79,8 +78,6 @@ class LoginActivity : AppCompatActivity() {
         email: String,
         password: String
     ):Boolean {
-
-        // Basic checks
         if (email.isEmpty()) {
             emailAddressInputLayout.error = "Email cannot be empty"
             return false
