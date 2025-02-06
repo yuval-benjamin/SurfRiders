@@ -1,42 +1,41 @@
 package com.example.surfriders.data.location
 
 import android.util.Log
+import com.example.surfriders.data.AppLocalDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+
 
 const val GEOAPIFY_BASE_URL = "https://api.geoapify.com/v2/"
-const val apiKey = "61cddf3e65834b6cb4a3fb1963d0c47e"
+const val UNSPLAH_BASE_URL = "https://api.unsplash.com/"
+const val geoApiKey = "61cddf3e65834b6cb4a3fb1963d0c47e"
+const val unsplashApiKey =
+    "hGva-Wccvxl2R0Kk_-T0KyZFj_7tH5ea3gJOPXxxOLE"
 const val category = "beach"
 const val filter =
     "rect:33.91785157181864,32.75367877479448,35.45181884850199,31.525585493928073"  // for israel beach near Tel Aviv
 
-interface GeoapifyService {
-    @GET("places")
-    suspend fun getBeaches(
-        @Query("categories") categories: String = "beach",
-        @Query("filter") filter: String,
-        @Query("limit") limit: Int = 20,
-        @Query("apiKey") apiKey: String
-    ): GeoapifyResponse
-}
+//interface GeoapifyService {
+//    @GET("places")
+//    suspend fun getBeaches(
+//        @Query("categories") categories: String = "beach",
+//        @Query("filter") filter: String,
+//        @Query("limit") limit: Int = 20,
+//        @Query("apiKey") apiKey: String
+//    ): GeoapifyResponse
+//}
+//
+//interface UnsplashService {
+//    @GET("search/photos")
+//    suspend fun searchImages(
+//        @Query("query") query: String,  // The location name (e.g., beach name or city)
+//        @Query("client_id") apiKey: String  // Unsplash API key
+//    ): UnsplashResponse
+//}
 
-interface UnsplashService {
-    @GET("search/photos")
-    suspend fun searchImages(
-        @Query("query") query: String,  // The location name (e.g., beach name or city)
-        @Query("client_id") apiKey: String  // Unsplash API key
-    ): UnsplashResponse
-}
-
-// Unsplash API Key (replace with your actual API key)
-const val UNSPLASH_API_KEY =
-    "hGva-Wccvxl2R0Kk_-T0KyZFj_7tH5ea3gJOPXxxOLE"  // Replace this with your actual Unsplash API key
-
-const val UNSPLASH_API_SECRET= "gbZNEMeufyF3HSWaGi3GgnOs2NOTJHdL447Erbh67TU"
+//const val UNSPLASH_API_SECRET= "gbZNEMeufyF3HSWaGi3GgnOs2NOTJHdL447Erbh67TU"
 
 
 class LocationService {
@@ -44,12 +43,19 @@ class LocationService {
         val instance: LocationService = LocationService()
     }
 
-    // Retrofit service instance
     private val apiService: GeoapifyService =
         RetrofitClient.retrofit.create(GeoapifyService::class.java)
 
-    // Function to fetch beach locations
-    suspend fun getLocations() {
+    private val locationDao = AppLocalDatabase.db.locationDao()
+
+
+    suspend fun getLocations(): List<Location> {
+        val cachedLocations = locationDao.getAllLocations()
+        if (cachedLocations.isNotEmpty()) {
+            return cachedLocations
+        }
+
+        val locationsList = mutableListOf<Location>()
         try {
             Log.d("BeachLocations", "Fetching beach data...")  // Log when starting
 
@@ -57,7 +63,7 @@ class LocationService {
                 categories = category,
                 filter = filter,
                 limit = 20,
-                apiKey = apiKey
+                apiKey = geoApiKey
             )
 
             Log.d(
@@ -67,6 +73,7 @@ class LocationService {
 
             if (response.features.isEmpty()) {
                 Log.d("BeachLocations", "No locations found.")
+                return emptyList()
             }
 
             val locations = response.features.take(20)
@@ -78,7 +85,13 @@ class LocationService {
                 Log.d("BeachLocations", "Name: ${props.name ?: "Unknown"}")
                 Log.d("BeachLocations", "City: ${props.city ?: "Unknown"}")
                 Log.d("BeachLocations", "Image URL: $imageUrl")
+                val locationObj = Location(
+                    name = locationName,
+                    city = props.city ?: "Unknown",
+                    imageUrl = imageUrl
+                )
 
+                locationsList.add(locationObj)
             }
         } catch (e: Exception) {
             Log.e(
@@ -87,12 +100,14 @@ class LocationService {
                 e
             )
         }
+        locationDao.insertLocations(locationsList)
+        return locationsList
     }
 
     private suspend fun getImageForLocation(locationName: String): String? {
         return try {
             val response =
-                UnsplashClient.service.searchImages(query = locationName, apiKey = UNSPLASH_API_KEY)
+                UnsplashClient.service.searchImages(query = locationName, apiKey = unsplashApiKey)
 
             response.results.firstOrNull()?.urls?.regular
         } catch (e: Exception) {
@@ -113,38 +128,9 @@ class LocationService {
 
 object UnsplashClient {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.unsplash.com/")
+        .baseUrl(UNSPLAH_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     val service: UnsplashService = retrofit.create(UnsplashService::class.java)
 }
-
-data class UnsplashResponse(
-    val results: List<UnsplashPhoto>
-)
-
-data class UnsplashPhoto(
-    val urls: UnsplashPhotoUrls
-)
-
-data class UnsplashPhotoUrls(
-    val regular: String
-)
-
-data class GeoapifyResponse(
-    val features: List<Feature>
-)
-
-data class Feature(
-    val properties: BeachProperties
-)
-
-data class BeachProperties(
-    val name: String?,
-    val country: String?,
-    val city: String?,
-    val address: String?,
-    val latitude: Double,
-    val longitude: Double
-)

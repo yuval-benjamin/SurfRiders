@@ -14,25 +14,17 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("creation","creating ypi screen")
+        Log.i("creation", "creating ypi screen")
         setContentView(R.layout.activity_main)
         setUI()
 
     }
 
-    private fun setUI () {
-        fetchBeachData()
+    private fun setUI() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
-    }
-
-    fun fetchBeachData() {
-        Log.d("BeachLocations", "Fetching beach data...")
-        lifecycleScope.launch {
-            LocationService.instance.getLocations()  // Call the suspend function
-        }
     }
 }
