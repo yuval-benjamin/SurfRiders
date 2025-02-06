@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,10 @@ import com.bumptech.glide.Glide
 import com.example.surfriders.R
 import com.example.surfriders.data.location.Location
 
-class LocationAdapter(private var locations: List<Location>) :
+class LocationAdapter(
+    private var locations: List<Location>,
+    private val onPostClick: (Location) -> Unit
+) :
     RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -24,11 +28,12 @@ class LocationAdapter(private var locations: List<Location>) :
         val name: TextView = itemView.findViewById(R.id.locationName)
         val city: TextView = itemView.findViewById(R.id.locationCity)
         val image: ImageView = itemView.findViewById(R.id.locationImage)
+        val addPostButton: Button = itemView.findViewById(R.id.addPostButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_location, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.location_item, parent, false)
         return LocationViewHolder(view)
     }
 
@@ -41,6 +46,10 @@ class LocationAdapter(private var locations: List<Location>) :
             .load(location.imageUrl)
             .placeholder(R.drawable.placeholder_image)
             .into(holder.image)
+
+        holder.addPostButton.setOnClickListener {
+            onPostClick(location) // Trigger the action when the button is clicked
+        }
     }
 
     override fun getItemCount(): Int = locations.size
