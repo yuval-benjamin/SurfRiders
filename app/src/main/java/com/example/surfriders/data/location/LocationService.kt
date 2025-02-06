@@ -54,7 +54,6 @@ class LocationService {
         if (cachedLocations.isNotEmpty()) {
             return cachedLocations
         }
-
         val locationsList = mutableListOf<Location>()
         try {
             Log.d("BeachLocations", "Fetching beach data...")  // Log when starting
@@ -78,7 +77,7 @@ class LocationService {
 
             val locations = response.features.take(20)
 
-            for (location in locations) {
+            for ((i, location) in locations.withIndex()) {
                 val props = location.properties
                 val locationName = props.name ?: "Unknown Beach"
                 val imageUrl = getImageForLocation(locationName)
@@ -86,6 +85,7 @@ class LocationService {
                 Log.d("BeachLocations", "City: ${props.city ?: "Unknown"}")
                 Log.d("BeachLocations", "Image URL: $imageUrl")
                 val locationObj = Location(
+                    locationId = i.toString(),
                     name = locationName,
                     city = props.city ?: "Unknown",
                     imageUrl = imageUrl

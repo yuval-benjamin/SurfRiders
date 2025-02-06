@@ -22,5 +22,6 @@ data class BeachProperties(
     val city: String?,
     val address: String?,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val placeId: String
 )

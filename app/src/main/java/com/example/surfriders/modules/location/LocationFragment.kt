@@ -2,6 +2,7 @@ package com.example.surfriders.modules.location
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.surfriders.R
 import com.example.surfriders.data.location.Location
 import com.example.surfriders.data.location.LocationService
+import com.example.surfriders.modules.post.AddPostFragment
 import kotlinx.coroutines.launch
 
 class LocationFragment : Fragment() {
@@ -46,25 +48,25 @@ class LocationFragment : Fragment() {
     }
 
     private fun showAddPostDialog(location: Location) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Add Post for ${location.name}")
-        val input = EditText(requireContext())
-        builder.setView(input)
-
-        builder.setPositiveButton("Add Post") { _, _ ->
-            val postContent = input.text.toString()
-
-            // Handle the firebase save
-            addPostForLocation(location, postContent)
+        val bundle = Bundle().apply {
+            putString("locationId", location.locationId)
+            putString("locationName", location.name)
         }
 
-        builder.setNegativeButton("Cancel", null)
-        builder.show()
+        val addPostFragment = AddPostFragment().apply {
+            arguments = bundle
+        }
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, addPostFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun addPostForLocation(location: Location, postContent: String) {
         // need to save post to firebase
-        Toast.makeText(requireContext(), "Post added for ${location.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Post added for ${location.name}", Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun fetchLocations() {
@@ -74,6 +76,10 @@ class LocationFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val locations = LocationService.instance.getLocations()
+                
+                if (locations.isEmpty()) {
+                    Log.e("LocationFragment", "No locations returned")
+                }
 
                 loadingProgressBar.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE

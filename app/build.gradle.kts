@@ -41,6 +41,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.room.runtime)
+    //noinspection UseTomlInstead
+    implementation(libs.picasso)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx.v250)
     implementation(libs.glide)

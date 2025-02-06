@@ -23,4 +23,9 @@
     <string name="city">City</string>
     <string name="add_post">Add Post</string>
     <string name="location_image">Location Image</string>
+    <string name="my_posts">My Posts</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="logout">Logout</string>
+    <string name="create_post">Create Post</string>
+    <string name="submit_post">Submit Post</string>
 </resources>

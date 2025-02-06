@@ -14,6 +14,7 @@ activity = "1.10.0"
 constraintlayout = "2.2.0"
 firebaseAuthKtx = "23.1.0"
 firebaseCommonKtx = "21.0.0"
+picasso = "2.8"
 retrofit = "2.9.0"
 roomCommon = "2.6.1"
 firebaseFirestoreKtx = "25.1.1"
@@ -49,6 +50,7 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 

@@ -8,5 +8,6 @@ data class Location(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val city: String?,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val locationId: String
 )
