@@ -44,7 +44,7 @@
         android:layout_marginStart="8dp"
         android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/reviews"
-        android:text="My Reviews"
+        android:text="My Posts"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

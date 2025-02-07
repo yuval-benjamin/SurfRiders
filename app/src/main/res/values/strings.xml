@@ -17,6 +17,7 @@
     <string name="search">Search</string>
     <string name="surf">Surf</string>
     <string name="profile">Profile</string>
+    <string name="search_for_surf_spots_n_tap_them_for_details">Search for surf spots\n Tap them for details</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

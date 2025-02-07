@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("creation","creating ypi screen")
+        Log.i("creation","creating first screen")
         setContentView(R.layout.activity_main)
         setUI()
 

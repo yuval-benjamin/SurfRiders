@@ -95,14 +95,24 @@ class EditProfile : Fragment() {
                 binding.editTextLastName.error = it
         }
 
-
         binding.saveButton.setOnClickListener {
             binding.saveButton.isClickable = false
             viewModel.updateUser {
+                Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_edit_profile_to_profile)
                 binding.saveButton.isClickable = true
             }
         }
+
+
+
+//        binding.saveButton.setOnClickListener {
+//            binding.saveButton.isClickable = false
+//            viewModel.updateUser {
+//                findNavController().navigate(R.id.action_edit_profile_to_profile)
+//                binding.saveButton.isClickable = true
+//            }
+//        }
 
         binding.cancelButton.setOnClickListener {
             findNavController().navigate(R.id.action_edit_profile_to_profile)
