@@ -37,6 +37,7 @@ class PostFirebaseModel {
                         }
                         callback(posts)
                     }
+
                     false -> callback(listOf())
                 }
             }
@@ -46,6 +47,13 @@ class PostFirebaseModel {
         storage.reference.child("images/$POSTS_COLLECTION_PATH/$imageId")
             .downloadUrl
             .addOnSuccessListener { uri -> callback(uri) }
+    }
+
+    fun addPostImage(postId: String, selectedImageUri: Uri, callback: () -> Unit) {
+        val imageRef = storage.reference.child("images/$POSTS_COLLECTION_PATH/${postId}")
+        imageRef.putFile(selectedImageUri).addOnSuccessListener {
+            callback()
+        }
     }
 
     fun addPost(post: Post, callback: () -> Unit) {

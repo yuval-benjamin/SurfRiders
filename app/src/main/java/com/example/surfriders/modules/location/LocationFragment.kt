@@ -1,12 +1,10 @@
 package com.example.surfriders.modules.location
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -64,7 +62,6 @@ class LocationFragment : Fragment() {
     }
 
     private fun addPostForLocation(location: Location, postContent: String) {
-        // need to save post to firebase
         Toast.makeText(requireContext(), "Post added for ${location.name}", Toast.LENGTH_SHORT)
             .show()
     }
@@ -76,7 +73,6 @@ class LocationFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val locations = LocationService.instance.getLocations()
-                
                 if (locations.isEmpty()) {
                     Log.e("LocationFragment", "No locations returned")
                 }
@@ -86,7 +82,7 @@ class LocationFragment : Fragment() {
 
                 adapter.updateList(locations)
             } catch (e: Exception) {
-
+                e.printStackTrace()
                 loadingProgressBar.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), "Failed to load locations", Toast.LENGTH_SHORT)

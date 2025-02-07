@@ -17,6 +17,7 @@ data class Post(
     val grade: Int,
     val userId: String,
     val locationId: String,
+    val locationName: String,
     var isDeleted: Boolean = false,
     var postImage: String? = null,
     var timestamp: Long? = null,
@@ -40,6 +41,7 @@ data class Post(
         const val TEXT_KEY = "text"
         const val USER_ID_KEY = "userId"
         const val LOCATION_ID_KEY = "locationId"
+        const val LOCATION_NAME_KEY = "locationName"
         const val GRADE_KEY = "grade"
         const val LAST_UPDATED_KEY = "timestamp"
         const val IS_DELETED_KEY = "is_deleted"
@@ -56,7 +58,8 @@ data class Post(
             val isDeleted = json[IS_DELETED_KEY] as? Boolean ?: false
             val userId = json[USER_ID_KEY] as? String ?: ""
             val locationId = json[LOCATION_ID_KEY] as? String ?: ""
-            val post = Post(id, text, grade, userId, locationId, isDeleted)
+            val locationName = json[LOCATION_NAME_KEY] as? String ?: ""
+            val post = Post(id, text, grade, userId, locationId, locationName, isDeleted)
 
             val timestamp: Timestamp? = json[LAST_UPDATED_KEY] as? Timestamp
             timestamp?.let {
@@ -74,6 +77,7 @@ data class Post(
                 TEXT_KEY to text,
                 USER_ID_KEY to userId,
                 LOCATION_ID_KEY to locationId,
+                LOCATION_NAME_KEY to locationName,
                 GRADE_KEY to grade,
                 LAST_UPDATED_KEY to FieldValue.serverTimestamp(),
                 IS_DELETED_KEY to isDeleted

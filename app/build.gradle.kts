@@ -1,3 +1,5 @@
+
+
 plugins {
     id("kotlin-kapt")
     id("com.android.application")
@@ -40,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.play.services.auth)
     implementation(libs.androidx.room.runtime)
     //noinspection UseTomlInstead
     implementation(libs.picasso)

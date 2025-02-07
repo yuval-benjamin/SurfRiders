@@ -13,7 +13,7 @@ import com.example.surfriders.data.post.PostDao
 import com.example.surfriders.data.user.User
 import com.example.surfriders.data.user.UserDao
 
-@Database(entities = [User::class, Location::class, Post::class], version = 8, exportSchema = true)
+@Database(entities = [User::class, Location::class, Post::class], version = 9, exportSchema = true)
 abstract class AppLocalDbRepository : RoomDatabase() {
     abstract fun userDto(): UserDao
     abstract fun locationDao(): LocationDao

@@ -28,4 +28,9 @@
     <string name="logout">Logout</string>
     <string name="create_post">Create Post</string>
     <string name="submit_post">Submit Post</string>
+    <string name="enter_grade">Enter grade</string>
+    <string name="enter_your_post">Enter your post</string>
+    <string name="pick_post_picture">pick post picture</string>
+    <string name="post_image">Post image</string>
+    <string name="post">post</string>
 </resources>

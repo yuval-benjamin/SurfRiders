@@ -4,12 +4,10 @@ import android.util.Log
 import com.example.surfriders.data.AppLocalDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 
 const val GEOAPIFY_BASE_URL = "https://api.geoapify.com/v2/"
-const val UNSPLAH_BASE_URL = "https://api.unsplash.com/"
+const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 const val geoApiKey = "61cddf3e65834b6cb4a3fb1963d0c47e"
 const val unsplashApiKey =
     "hGva-Wccvxl2R0Kk_-T0KyZFj_7tH5ea3gJOPXxxOLE"
@@ -54,6 +52,7 @@ class LocationService {
         if (cachedLocations.isNotEmpty()) {
             return cachedLocations
         }
+
         val locationsList = mutableListOf<Location>()
         try {
             Log.d("BeachLocations", "Fetching beach data...")  // Log when starting
@@ -128,7 +127,7 @@ class LocationService {
 
 object UnsplashClient {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(UNSPLAH_BASE_URL)
+        .baseUrl(UNSPLASH_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

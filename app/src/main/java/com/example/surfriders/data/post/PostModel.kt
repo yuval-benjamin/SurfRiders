@@ -1,5 +1,6 @@
 package com.example.surfriders.data.post
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.example.surfriders.data.AppLocalDatabase
 import java.util.concurrent.Executors
@@ -35,10 +36,12 @@ class PostModel private constructor() {
         }
     }
 
-    fun addPost(post: Post, callback: () -> Unit) {
+    fun addPost(post: Post, selectedImageUri: Uri, callback: () -> Unit) {
         firebaseModel.addPost(post) {
-            refreshAllPosts()
-            callback()
+            firebaseModel.addPostImage(post.id, selectedImageUri) {
+                refreshAllPosts()
+                callback()
+            }
         }
     }
 }
