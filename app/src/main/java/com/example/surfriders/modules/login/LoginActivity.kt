@@ -9,14 +9,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.surfriders.MainActivity
 import com.example.surfriders.R
+import com.example.surfriders.modules.feed.Feed
 import com.example.surfriders.modules.signup.SignUpActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 class LoginActivity : AppCompatActivity() {
 
+//    private lateinit var auth: FirebaseAuth
     private var auth = Firebase.auth
     private lateinit var emailAddressInputLayout: TextInputLayout
     private lateinit var emailAddressInputEditText: TextInputEditText
@@ -33,6 +36,15 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.i("creation", "creating signing screen")
         setContentView(R.layout.login_screen)
+
+        auth = FirebaseAuth.getInstance()
+
+        // Check if the user is already signed in
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            Log.i("creation", "User is already signed in, navigating to feed")
+            loggedInHandler()
+        }
 
         setUI()
     }

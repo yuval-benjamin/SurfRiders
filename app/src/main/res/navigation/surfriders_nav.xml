@@ -21,6 +21,17 @@
             app:destination="@id/profile" />
     </fragment>
 
+<!--NEEDTODO: this is the addition after posts-->
+<!--    <fragment-->
+<!--        android:id="@+id/searchFragment"-->
+<!--        android:name="com.example.surfriders.modules.search.SearchFragment"-->
+<!--        android:label="fragment_search"-->
+<!--        tools:layout="@layout/fragment_search" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_searchFragment_to_cocktailFragment"-->
+<!--            app:destination="@id/postsFragment" />-->
+<!--    </fragment>-->
+
     <fragment
         android:id="@+id/profile"
         android:name="com.example.SurfRiders.modules.profile.Profile"
