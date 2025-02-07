@@ -7,7 +7,7 @@
 
 
     <ImageButton
-        android:id="@+id/cocktailPicButton"
+        android:id="@+id/profilePicButton"
         android:layout_width="127dp"
         android:layout_height="110dp"
         android:layout_marginTop="120dp"
@@ -36,7 +36,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cocktailPicButton">
+        app:layout_constraintTop_toBottomOf="@+id/profilePicButton">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextFirstName"
@@ -102,5 +102,19 @@
         app:layout_constraintTop_toBottomOf="@+id/layoutTextLastName"
         app:layout_constraintVertical_bias="0.303" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelButton"
+        android:layout_width="330dp"
+        android:layout_height="67dp"
+        android:backgroundTint="@color/white"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/saveButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
