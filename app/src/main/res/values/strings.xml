@@ -19,4 +19,13 @@
     <string name="profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location_name">Location Name</string>
+    <string name="city">City</string>
+    <string name="add_post">Add Post</string>
+    <string name="location_image">Location Image</string>
+    <string name="my_posts">My Posts</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="logout">Logout</string>
+    <string name="create_post">Create Post</string>
+    <string name="submit_post">Submit Post</string>
 </resources>

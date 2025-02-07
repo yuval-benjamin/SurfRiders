@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface UserDTO {
+interface UserDao {
     @Query("SELECT * FROM user")
     fun getAllUsers(): LiveData<MutableList<User>>
 

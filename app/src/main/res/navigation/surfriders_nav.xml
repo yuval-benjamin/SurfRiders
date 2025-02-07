@@ -26,13 +26,18 @@
         android:name="com.example.SurfRiders.modules.profile.Profile"
         android:label="fragment_profile"
         tools:layout="@layout/profile" >
-<!--        NEEDTODO-->
+        <!--        NEEDTODO-->
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/edit_profile" />
-<!--        <action-->
-<!--            android:id="@+id/action_profile_to_my_cocktails_reviews"-->
-<!--            app:destination="@id/profileReviews" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_profile_to_my_cocktails_reviews"-->
+        <!--            app:destination="@id/profileReviews" />-->
     </fragment>
 
+    <fragment
+        android:id="@+id/surfFragment"
+        android:name="com.example.surfriders.modules.location.LocationFragment"
+        android:label="Surf"
+        tools:layout="@layout/fragment_location" />
 </navigation>
