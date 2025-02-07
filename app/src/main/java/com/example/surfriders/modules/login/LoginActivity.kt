@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("creation", "creating signing screen")
+        Log.i("creation", "creating signing screen ohad")
         setContentView(R.layout.login_screen)
 
         setUI()
