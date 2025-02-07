@@ -60,7 +60,6 @@ class UserFirebaseModel {
 
         imageRef.putFile(selectedImageUri)
             .addOnSuccessListener { taskSnapshot ->
-                Log.d("FirebaseUpload", "Image upload successful, File path: ${taskSnapshot.metadata?.path}")
 
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
                     Log.d("FirebaseUpload", "Image URL retrieved: $uri")
@@ -75,6 +74,9 @@ class UserFirebaseModel {
     }
 
     fun updateUser(user: User?, callback: () -> Unit) {
+
+        Log.d("UpdateUser", "inside UserFirebaseModel: update user")
+
         db.collection(USERS_COLLECTION_PATH)
             .document(user!!.id).update(user.updateJson)
             .addOnSuccessListener {
@@ -86,11 +88,6 @@ class UserFirebaseModel {
 
     fun addUser(user: User, callback: () -> Unit) {
         Log.i("userModel", "Creating user:$user")
-
-        Log.d("userModel", "User json: ${user.json}")
-
-        Log.d("userModel", "Collection path: $USERS_COLLECTION_PATH")
-
 
         db.collection(USERS_COLLECTION_PATH).document(user.id).set(user.json)
             .addOnSuccessListener {

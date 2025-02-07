@@ -99,7 +99,7 @@ class EditProfile : Fragment() {
         binding.saveButton.setOnClickListener {
             binding.saveButton.isClickable = false
             viewModel.updateUser {
-                findNavController().navigate(R.id.action_profile_to_edit_profile)
+                findNavController().navigate(R.id.action_edit_profile_to_profile)
                 binding.saveButton.isClickable = true
             }
         }

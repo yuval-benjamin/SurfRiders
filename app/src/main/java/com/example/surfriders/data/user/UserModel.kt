@@ -53,6 +53,10 @@ class UserModel private constructor() {
     }
 
     fun updateUser(user: User?, callback: () -> Unit) {
+
+        Log.d("UpdateUser", "inside UserModel: update user")
+
+
         firebaseModel.updateUser(user) {
             refreshAllUsers()
             callback()
@@ -71,8 +75,6 @@ class UserModel private constructor() {
     }
 
     fun addUser(user: User, ImageUri: Uri, callback: () -> Unit) {
-
-        Log.d("userModel", "Inside Add User function")
 
         firebaseModel.addUser(user) {
             Log.d("userModel", "Inside Add User")
