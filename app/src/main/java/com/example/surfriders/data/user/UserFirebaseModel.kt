@@ -85,11 +85,11 @@ class UserFirebaseModel {
     }
 
     fun addUser(user: User, callback: () -> Unit) {
-        Log.i("userFirebaseModel", "Creating user:$user")
+        Log.i("userModel", "Creating user:$user")
 
-        Log.d("userFirebaseModel", "User json: ${user.json}")
+        Log.d("userModel", "User json: ${user.json}")
 
-        Log.d("userFirebaseModel", "Collection path: $USERS_COLLECTION_PATH")
+        Log.d("userModel", "Collection path: $USERS_COLLECTION_PATH")
 
 
         db.collection(USERS_COLLECTION_PATH).document(user.id).set(user.json)
