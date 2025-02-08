@@ -26,6 +26,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         notifyDataSetChanged()
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding)
@@ -45,24 +46,15 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
             binding.textViewPost.text = post.text
             binding.ratingBar.rating = post.grade.toFloat()
             binding.textViewLocation.text = post.locationName
+
             Log.d("PostAdapter", "Image ID: ${post.postImage}")
 
-            post.postImage?.let { imageId ->
-                postFirebaseModel.getImage(imageId) { uri ->
-                    Log.d("PostAdapter", "Loading image from: $uri")  // Log the URI being loaded
-
-                    Picasso.get().load(uri).into(binding.imageViewPostImage, object : Callback {
-                        override fun onSuccess() {
-                            Log.d("PostAdapter", "Image loaded successfully!")
-                        }
-
-                        override fun onError(e: Exception?) {
-                            Log.e("PostAdapter", "Error loading image", e)
-                        }
-                    })
-                }
+            // Check if the post image URL is valid
+            post.postImage?.let { imageUrl ->
+                Picasso.get().load(imageUrl)
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(binding.imageViewPostImage)
             }
         }
     }
-
 }

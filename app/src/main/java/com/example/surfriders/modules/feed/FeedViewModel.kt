@@ -15,15 +15,24 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> get() = _posts
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     init {
         fetchPosts()
     }
 
     private fun fetchPosts() {
+        _isLoading.value = true
         postFirebaseModel.getAllPosts { postList ->
             _posts.value = postList
+            _isLoading.value = false
             Log.d("FeedViewModel", "Fetched posts: ${postList.size}")
         }
     }
 
+    fun refreshPosts() {
+        fetchPosts()
+    }
 }
+

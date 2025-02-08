@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.android)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx.v250)
-    implementation(libs.glide)
     implementation(libs.androidx.swiperefreshlayout)
     ksp(libs.compiler)
     implementation(libs.kotlinx.coroutines.android)
