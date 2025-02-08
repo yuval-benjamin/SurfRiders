@@ -61,7 +61,7 @@ class EditProfile : Fragment() {
         Log.d("EditProfile", "onCreateView: ")
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this)[EditProfileViewModel::class.java]
         setUI()
         return view
     }
@@ -103,8 +103,6 @@ class EditProfile : Fragment() {
                 binding.saveButton.isClickable = true
             }
         }
-
-
 
 //        binding.saveButton.setOnClickListener {
 //            binding.saveButton.isClickable = false

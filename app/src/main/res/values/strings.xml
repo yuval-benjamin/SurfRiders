@@ -33,4 +33,7 @@
     <string name="pick_post_picture">pick post picture</string>
     <string name="post_image">Post image</string>
     <string name="post">post</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -15,6 +15,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_marginTop="148dp"
+        android:contentDescription="@string/profile_image"
         android:src="@drawable/profile_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
