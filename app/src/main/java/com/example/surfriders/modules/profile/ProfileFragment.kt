@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        root = inflater.inflate(R.layout.fragment_profile, container, false)
+        root = inflater.inflate(R.layout.profile, container, false)
         root = setUI(root)
         return root
 

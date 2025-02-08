@@ -17,7 +17,7 @@ class EditProfileViewModel : ViewModel() {
     var selectedImageURI: MutableLiveData<Uri> = MutableLiveData()
     var user: LiveData<User> = UserModel.instance.getCurrentUser()
 //
-    var firstName: String? = "yosi"
+    var firstName: String? = ""
     var lastName: String? = null
     var firstNameError = MutableLiveData("")
     var lastNameError = MutableLiveData("")
