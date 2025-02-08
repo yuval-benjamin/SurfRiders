@@ -12,6 +12,42 @@
         tools:layout="@layout/activity_main" />
 
     <fragment
+        android:id="@+id/edit_profile"
+        android:name="com.example.SurfRiders.modules.editProfile.EditProfile"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_edit_profile_to_profile"
+            app:destination="@id/profile" />
+    </fragment>
+
+    <!--NEEDTODO: this is the addition after posts-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/searchFragment"-->
+    <!--        android:name="com.example.surfriders.modules.search.SearchFragment"-->
+    <!--        android:label="fragment_search"-->
+    <!--        tools:layout="@layout/fragment_search" >-->
+    <!--        <action-->
+    <!--            android:id="@+id/action_searchFragment_to_cocktailFragment"-->
+    <!--            app:destination="@id/postsFragment" />-->
+    <!--    </fragment>-->
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.SurfRiders.modules.profile.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+
+        <action
+            android:id="@+id/action_profile_to_edit_profile"
+            app:destination="@id/edit_profile" />
+        <!--        NEEDTODO-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_profile_to_my_cocktails_reviews"-->
+        <!--            app:destination="@id/profileReviews" />-->
+    </fragment>
+
+    <fragment
         android:id="@+id/surfFragment"
         android:name="com.example.surfriders.modules.location.LocationFragment"
         android:label="Surf"
