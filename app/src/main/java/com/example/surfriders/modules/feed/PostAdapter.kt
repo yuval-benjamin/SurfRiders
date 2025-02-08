@@ -1,6 +1,7 @@
 package com.example.surfriders.modules.feed
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.example.surfriders.R
 import com.example.surfriders.data.post.Post
 import com.example.surfriders.data.post.PostFirebaseModel
 import com.example.surfriders.databinding.ItemPostBinding
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -18,6 +20,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updatePosts(newPosts: List<Post>) {
+        Log.d("PostAdapter", "Updating posts: ${newPosts.size}")
         posts.clear()
         posts.addAll(newPosts)
         notifyDataSetChanged()
@@ -35,19 +38,31 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun getItemCount(): Int = posts.size
 
-    inner class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PostViewHolder(private val binding: ItemPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
             binding.textViewPost.text = post.text
             binding.ratingBar.rating = post.grade.toFloat()
             binding.textViewLocation.text = post.locationName
+            Log.d("PostAdapter", "Image ID: ${post.postImage}")
 
-            // Load image from Firebase
             post.postImage?.let { imageId ->
                 postFirebaseModel.getImage(imageId) { uri ->
-                    Picasso.get().load(uri).into(binding.imageViewPostImage)
+                    Log.d("PostAdapter", "Loading image from: $uri")  // Log the URI being loaded
+
+                    Picasso.get().load(uri).into(binding.imageViewPostImage, object : Callback {
+                        override fun onSuccess() {
+                            Log.d("PostAdapter", "Image loaded successfully!")
+                        }
+
+                        override fun onError(e: Exception?) {
+                            Log.e("PostAdapter", "Error loading image", e)
+                        }
+                    })
                 }
             }
         }
     }
+
 }

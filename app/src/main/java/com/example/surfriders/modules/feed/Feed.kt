@@ -21,17 +21,13 @@ class Feed : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Initialize ViewBinding
         binding = FragmentFeedBinding.inflate(inflater, container, false)
 
-        // Setup RecyclerView
         binding.recyclerViewFeed.layoutManager = LinearLayoutManager(context)
 
-        // Initialize the PostAdapter
         postAdapter = PostAdapter()
         binding.recyclerViewFeed.adapter = postAdapter
 
-        // Observe posts from the ViewModel
         feedViewModel.posts.observe(viewLifecycleOwner, Observer { posts ->
             postAdapter.updatePosts(posts)
         })

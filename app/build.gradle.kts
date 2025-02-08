@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation (libs.picasso.v271828)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.room.runtime)
     //noinspection UseTomlInstead

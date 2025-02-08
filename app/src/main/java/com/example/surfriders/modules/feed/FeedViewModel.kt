@@ -1,6 +1,7 @@
 package com.example.surfriders.modules.feed
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +12,6 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val postFirebaseModel = PostFirebaseModel()
 
-    // LiveData to hold the list of posts
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> get() = _posts
 
@@ -20,9 +20,10 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun fetchPosts() {
-        val since = Post.lastUpdated
-        postFirebaseModel.getAllPosts(since) { postList ->
+        postFirebaseModel.getAllPosts { postList ->
             _posts.value = postList
+            Log.d("FeedViewModel", "Fetched posts: ${postList.size}")
         }
     }
+
 }

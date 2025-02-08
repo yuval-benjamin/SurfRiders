@@ -19,11 +19,9 @@ class PostModel private constructor() {
         return database.postDao().getAllPosts()
     }
 
-    private fun refreshAllPosts() {
-        val lastUpdated: Long = Post.lastUpdated
-
-        firebaseModel.getAllPosts(lastUpdated) { list ->
-            var time = lastUpdated
+    fun refreshAllPosts() {
+        firebaseModel.getAllPosts { list ->
+            var time = Post.lastUpdated  // Keep track of the latest timestamp
             for (post in list) {
                 post.timestamp?.let {
                     if (time < it) time = it
@@ -31,17 +29,22 @@ class PostModel private constructor() {
                 postsExecutor.execute {
                     database.postDao().insertPost(post)
                 }
-                Post.lastUpdated = time
+                Post.lastUpdated = time  // Update the lastUpdated value
             }
         }
     }
 
+
     fun addPost(post: Post, selectedImageUri: Uri, callback: () -> Unit) {
-        firebaseModel.addPost(post) {
-            firebaseModel.addPostImage(post.id, selectedImageUri) {
+        // Upload the image first
+        firebaseModel.addPostImage(post.id, selectedImageUri) { imageUri ->
+            val updatedPost = post.copy(postImage = imageUri.toString())
+
+            firebaseModel.addPost(updatedPost) {
                 refreshAllPosts()
                 callback()
             }
         }
     }
+
 }
