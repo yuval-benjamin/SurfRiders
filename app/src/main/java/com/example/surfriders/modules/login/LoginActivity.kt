@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordInputEditText: TextInputEditText
 
     private lateinit var signUpButton: Button
-    private lateinit var signinButton: Button
+    private lateinit var signingButton: Button
     private lateinit var forgotPasswordButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUI() {
-        signinButton = findViewById(R.id.LoginButton)
+        signingButton = findViewById(R.id.LoginButton)
         forgotPasswordButton = findViewById(R.id.ForgotPasswordPageButton)
         signUpButton = findViewById(R.id.toSignupPageButton)
 
-        signinButton.setOnClickListener {
+        signingButton.setOnClickListener {
             Log.i("buttonClick", "signing button clicked in login page")
             checkLoginUser()
         }

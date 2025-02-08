@@ -1,48 +1,62 @@
 package com.example.surfriders.modules.location
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.surfriders.R
+import com.example.surfriders.databinding.FragmentLocationBinding
 import com.example.surfriders.data.location.Location
-import com.example.surfriders.data.location.LocationService
 import com.example.surfriders.modules.post.AddPostFragment
-import kotlinx.coroutines.launch
 
 class LocationFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentLocationBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: LocationViewModel by viewModels()
     private lateinit var adapter: LocationAdapter
-    private lateinit var loadingProgressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_location, container, false)
+        _binding = FragmentLocationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = LocationAdapter(emptyList()) { location ->
             showAddPostDialog(location)
         }
 
-        recyclerView.adapter = adapter
-        loadingProgressBar = view.findViewById(R.id.loadingProgressBar)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
 
-        fetchLocations()
+        viewModel.locations.observe(viewLifecycleOwner, Observer { locations ->
+            adapter.updateList(locations)
+            binding.loadingProgressBar.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+            binding.loadingProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+        })
+
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.fetchLocations()
     }
 
     private fun showAddPostDialog(location: Location) {
@@ -56,38 +70,13 @@ class LocationFragment : Fragment() {
         }
 
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, addPostFragment)
+            .replace(binding.fragmentContainerView.id, addPostFragment)
             .addToBackStack(null)
             .commit()
     }
 
-    private fun addPostForLocation(location: Location, postContent: String) {
-        Toast.makeText(requireContext(), "Post added for ${location.name}", Toast.LENGTH_SHORT)
-            .show()
-    }
-
-    private fun fetchLocations() {
-        loadingProgressBar.visibility = View.VISIBLE
-        recyclerView.visibility = View.GONE
-
-        lifecycleScope.launch {
-            try {
-                val locations = LocationService.instance.getLocations()
-                if (locations.isEmpty()) {
-                    Log.e("LocationFragment", "No locations returned")
-                }
-
-                loadingProgressBar.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-
-                adapter.updateList(locations)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                loadingProgressBar.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Failed to load locations", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Prevent memory leaks
     }
 }

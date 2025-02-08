@@ -1,5 +1,3 @@
-
-
 plugins {
     id("kotlin-kapt")
     id("com.android.application")
@@ -39,6 +37,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -46,6 +47,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     //noinspection UseTomlInstead
     implementation(libs.picasso)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx.v250)
     implementation(libs.glide)

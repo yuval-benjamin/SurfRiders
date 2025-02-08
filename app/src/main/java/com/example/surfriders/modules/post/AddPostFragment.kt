@@ -7,15 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.surfriders.R
+import com.example.surfriders.databinding.FragmentAddPostBinding
 
 class AddPostFragment : Fragment() {
 
@@ -24,9 +21,7 @@ class AddPostFragment : Fragment() {
     private var locationName: String? = null
 
     private lateinit var imageSelectionLauncher: ActivityResultLauncher<Intent>
-    private lateinit var buttonSelectImage: ImageButton
-    private lateinit var editTextPost: EditText
-    private lateinit var editTextGrade: EditText
+    private lateinit var binding: FragmentAddPostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,27 +32,30 @@ class AddPostFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        // Initialize ViewBinding
+        binding = FragmentAddPostBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize ViewModel
         viewModel = ViewModelProvider(this)[AddPostViewModel::class.java]
-        val root = inflater.inflate(R.layout.fragment_add_post, container, false)
 
-        // Initialize views
-        editTextPost = root.findViewById(R.id.editTextPost)
-        editTextGrade = root.findViewById(R.id.editTextGrade)
-        val buttonSubmit = root.findViewById<Button>(R.id.buttonSubmit)
-        buttonSelectImage = root.findViewById<ImageButton>(R.id.buttonSelectImage)
-
+        // Define image selection callback
         defineImageSelectionCallBack()
 
-        buttonSelectImage.setOnClickListener {
+        binding.buttonSelectImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             imageSelectionLauncher.launch(intent)
         }
 
-        buttonSubmit.setOnClickListener {
-            val postText = editTextPost.text.toString().trim()
-            val gradeText = editTextGrade.text.toString().trim()
+        binding.buttonSubmit.setOnClickListener {
+            val postText = binding.editTextPost.text.toString().trim()
+            val gradeText = binding.editTextGrade.text.toString().trim()
 
             // Validate inputs
             if (postText.isEmpty()) {
@@ -99,8 +97,6 @@ class AddPostFragment : Fragment() {
                 }
             }
         }
-
-        return root
     }
 
     private fun defineImageSelectionCallBack() {
@@ -119,7 +115,7 @@ class AddPostFragment : Fragment() {
                         ).show()
                     } else {
                         viewModel.imageURI.postValue(imageUri)
-                        buttonSelectImage.setImageURI(imageUri)
+                        binding.buttonSelectImage.setImageURI(imageUri)
                     }
                 } catch (e: Exception) {
                     Log.d("AddPostFragment", "Error selecting image: $e")
@@ -140,4 +136,5 @@ class AddPostFragment : Fragment() {
         }
         return size
     }
+
 }
