@@ -16,7 +16,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updatePosts(newPosts: List<Post>) {
-        Log.d("PostAdapter", "Updating posts: ${newPosts.size}")
         posts.clear()
         posts.addAll(newPosts)
         notifyDataSetChanged()
@@ -38,7 +37,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
-            Log.d("PostAdapter", "Binding post: ${post.id}, Username: ${post.username}, Profile Image: ${post.userProfileImage}")
             binding.textViewPost.text = post.text
             binding.ratingBar.rating = post.grade.toFloat()
             binding.textViewLocation.text = post.locationName
