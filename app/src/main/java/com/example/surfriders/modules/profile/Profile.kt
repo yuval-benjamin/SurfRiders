@@ -1,4 +1,4 @@
-package com.example.surfriders.modules.profile
+package com.example.SurfRiders.modules.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.storage.storage
 import com.squareup.picasso.Picasso
 
-class ProfileFragment : Fragment() {
+class Profile : Fragment() {
 
     private lateinit var root: View
     private var auth = Firebase.auth
@@ -27,34 +27,29 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         root = inflater.inflate(R.layout.fragment_profile, container, false)
         root = setUI(root)
         return root
 
     }
 
-    private fun setUI(root: View): View {
+    private fun setUI(root: View) : View{
 
         root.findViewById<TextView>(R.id.UserNameTextView).text = "${auth.currentUser?.displayName}"
 
-        val user = auth.currentUser
-        if (user != null) {
-            val imageRef = storage.reference.child("images/users/${user.uid}")
-            imageRef.downloadUrl.addOnSuccessListener { uri ->
-                Picasso.get().load(uri).into(root.findViewById<ImageView>(R.id.ProfileImageView))
-            }.addOnFailureListener { exception ->
-                Log.d("FirebaseStorage", "Error getting download image URI: $exception")
-            }
-        } else {
-            Log.d("FirebaseAuth", "User is not signed in.")
+        val imageRef = storage.reference.child("images/users/${auth.currentUser?.uid}")
+        imageRef.downloadUrl.addOnSuccessListener { uri ->
+            Picasso.get().load(uri).into(root.findViewById<ImageView>(R.id.ProfileImageView))
+        }.addOnFailureListener { exception ->
+            Log.d("FirebaseStorage", "Error getting download image URI: $exception")
         }
 
         root.findViewById<Button>(R.id.MyPostsButton).setOnClickListener {
-//            Navigation.findNavController(root).navigate(R.id.) // move to my posts page
+            Navigation.findNavController(root).navigate(R.id.myPosts)
         }
         root.findViewById<Button>(R.id.EditProfileButton).setOnClickListener {
-//            Navigation.findNavController(root).navigate(R.id.) // move to edit profile
+            Navigation.findNavController(root).navigate(R.id.action_profile_to_edit_profile)
         }
         root.findViewById<Button>(R.id.LogoutButton).setOnClickListener {
             logOut()
