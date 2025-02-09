@@ -34,6 +34,13 @@ class LoginActivity : AppCompatActivity() {
         Log.i("creation", "creating signing screen")
         setContentView(R.layout.login_screen)
 
+        // Check if the user is already signed in
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            Log.i("creation", "User is already signed in, navigating to feed")
+            loggedInHandler()
+        }
+
         setUI()
     }
 

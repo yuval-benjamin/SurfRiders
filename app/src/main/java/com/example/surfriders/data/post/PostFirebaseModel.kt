@@ -7,6 +7,8 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.memoryCacheSettings
 import com.google.firebase.storage.storage
+import com.google.firebase.auth.auth
+
 
 class PostFirebaseModel {
     private val db = Firebase.firestore
@@ -25,6 +27,32 @@ class PostFirebaseModel {
 
     fun getAllPosts(callback: (List<Post>) -> Unit) {
         db.collection(POSTS_COLLECTION_PATH)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val posts: MutableList<Post> = mutableListOf()
+                    for (json in it.result) {
+                        val post = Post.fromJSON(json.data)
+                        posts.add(post)
+                    }
+                    callback(posts)
+                } else {
+                    callback(listOf())
+                }
+            }
+    }
+
+    fun getUserPosts(callback: (List<Post>) -> Unit) {
+        val auth = Firebase.auth
+        val currentUser = auth.currentUser
+
+        if (currentUser == null) {
+            callback(listOf())
+            return
+        }
+
+        db.collection(POSTS_COLLECTION_PATH)
+            .whereEqualTo("userId", currentUser.uid)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {

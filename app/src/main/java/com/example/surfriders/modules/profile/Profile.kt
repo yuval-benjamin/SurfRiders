@@ -44,10 +44,10 @@ class Profile : Fragment() {
         }.addOnFailureListener { exception ->
             Log.d("FirebaseStorage", "Error getting download image URI: $exception")
         }
-// NEEDTODO
-//        root.findViewById<Button>(R.id.MyReviewsButton).setOnClickListener {
-//            Navigation.findNavController(root).navigate(R.id.action_profile_to_my_cocktails_reviews)
-//        }
+
+        root.findViewById<Button>(R.id.MyPostsButton).setOnClickListener {
+            Navigation.findNavController(root).navigate(R.id.myPosts)
+        }
         root.findViewById<Button>(R.id.EditProfileButton).setOnClickListener {
             Navigation.findNavController(root).navigate(R.id.action_profile_to_edit_profile)
         }

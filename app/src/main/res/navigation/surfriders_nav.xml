@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/feed"
         android:name="com.example.surfriders.modules.feed.Feed"
-        android:label="fragment_cocktails_feed"
+        android:label="fragment_feed"
         tools:layout="@layout/activity_main" />
 
     <fragment
@@ -21,7 +21,6 @@
             app:destination="@id/profile" />
     </fragment>
 
-    <!--NEEDTODO: this is the addition after posts-->
     <!--    <fragment-->
     <!--        android:id="@+id/searchFragment"-->
     <!--        android:name="com.example.surfriders.modules.search.SearchFragment"-->
@@ -41,10 +40,19 @@
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/edit_profile" />
-        <!--        NEEDTODO-->
-        <!--        <action-->
-        <!--            android:id="@+id/action_profile_to_my_cocktails_reviews"-->
-        <!--            app:destination="@id/profileReviews" />-->
+                <action
+                    android:id="@+id/myPosts"
+                    app:destination="@id/myPosts" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPosts"
+        android:name="com.example.surfriders.modules.myPosts.myPosts"
+        android:label="fragment_my_posts"
+        tools:layout="@layout/fragment_my_posts" >
+        <action
+            android:id="@+id/action_my_profile_to_profile"
+            app:destination="@id/profile" />
     </fragment>
 
     <fragment

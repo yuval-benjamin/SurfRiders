@@ -29,8 +29,8 @@
         android:text="Hi Yosi!"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ProfileImageView" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/MyReviewsButton"
+        android:id="@+id/MyPostsButton"
         android:layout_width="151dp"
         android:layout_height="93dp"
         android:layout_marginStart="8dp"

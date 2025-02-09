@@ -20,7 +20,7 @@ class PostModel private constructor() {
     }
 
     fun refreshAllPosts() {
-        firebaseModel.getAllPosts { list ->
+        firebaseModel.getUserPosts { list ->
             var time = Post.lastUpdated  // Keep track of the latest timestamp
             for (post in list) {
                 post.timestamp?.let {
