@@ -12,16 +12,21 @@ import java.io.Serializable
 @Entity
 data class Post(
     @PrimaryKey
-    val id: String,
-    val text: String,
-    val grade: Int,
-    val userId: String,
-    val locationId: String,
-    val locationName: String,
+    var id: String,
+    var text: String,
+    var grade: Int,
+    var userId: String,
+    var locationId: String,
+    var locationName: String,
     var isDeleted: Boolean = false,
     var postImage: String? = null,
     var timestamp: Long? = null,
-) : Serializable {
+    @Transient var username: String? = null,
+    @Transient var userProfileImage: String? = null,
+
+
+    ) : Serializable {
+    constructor() : this("", "", 0, "", "", "", false, null, null)
 
     companion object {
         var lastUpdated: Long
@@ -45,6 +50,7 @@ data class Post(
         const val GRADE_KEY = "grade"
         const val LAST_UPDATED_KEY = "timestamp"
         const val IS_DELETED_KEY = "is_deleted"
+        const val POST_IMAGE_KEY = "postImage"
         private const val POST_LAST_UPDATED = "post_last_updated"
 
         fun fromJSON(json: Map<String, Any>): Post {
@@ -59,7 +65,8 @@ data class Post(
             val userId = json[USER_ID_KEY] as? String ?: ""
             val locationId = json[LOCATION_ID_KEY] as? String ?: ""
             val locationName = json[LOCATION_NAME_KEY] as? String ?: ""
-            val post = Post(id, text, grade, userId, locationId, locationName, isDeleted)
+            val postImage = json[POST_IMAGE_KEY] as? String
+            val post = Post(id, text, grade, userId, locationId, locationName, isDeleted, postImage)
 
             val timestamp: Timestamp? = json[LAST_UPDATED_KEY] as? Timestamp
             timestamp?.let {
@@ -70,7 +77,7 @@ data class Post(
         }
     }
 
-    val json: Map<String, Any>
+    val json: HashMap<String, Any?>
         get() {
             return hashMapOf(
                 ID_KEY to id,
@@ -80,7 +87,8 @@ data class Post(
                 LOCATION_NAME_KEY to locationName,
                 GRADE_KEY to grade,
                 LAST_UPDATED_KEY to FieldValue.serverTimestamp(),
-                IS_DELETED_KEY to isDeleted
+                IS_DELETED_KEY to isDeleted,
+                POST_IMAGE_KEY to postImage
             )
         }
 

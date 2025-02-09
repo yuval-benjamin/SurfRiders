@@ -1,5 +1,6 @@
 package com.example.surfriders.modules.feed
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,20 +22,24 @@ class Feed : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Initialize ViewBinding
         binding = FragmentFeedBinding.inflate(inflater, container, false)
 
-        // Setup RecyclerView
         binding.recyclerViewFeed.layoutManager = LinearLayoutManager(context)
 
-        // Initialize the PostAdapter
         postAdapter = PostAdapter()
         binding.recyclerViewFeed.adapter = postAdapter
 
-        // Observe posts from the ViewModel
         feedViewModel.posts.observe(viewLifecycleOwner, Observer { posts ->
             postAdapter.updatePosts(posts)
         })
+
+        feedViewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+            binding.swipeRefreshLayout.isRefreshing = isLoading
+        })
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            feedViewModel.refreshPosts()
+        }
 
         return binding.root
     }

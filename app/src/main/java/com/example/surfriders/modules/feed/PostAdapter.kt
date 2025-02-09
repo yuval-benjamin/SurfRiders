@@ -1,20 +1,18 @@
 package com.example.surfriders.modules.feed
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.surfriders.R
 import com.example.surfriders.data.post.Post
-import com.example.surfriders.data.post.PostFirebaseModel
 import com.example.surfriders.databinding.ItemPostBinding
 import com.squareup.picasso.Picasso
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private val posts: MutableList<Post> = mutableListOf()
-    private val postFirebaseModel = PostFirebaseModel()
 
     @SuppressLint("NotifyDataSetChanged")
     fun updatePosts(newPosts: List<Post>) {
@@ -35,19 +33,27 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun getItemCount(): Int = posts.size
 
-    inner class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PostViewHolder(private val binding: ItemPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
             binding.textViewPost.text = post.text
             binding.ratingBar.rating = post.grade.toFloat()
             binding.textViewLocation.text = post.locationName
+            binding.textViewUsername.text = post.username ?: "Unknown User"
 
-            // Load image from Firebase
-            post.postImage?.let { imageId ->
-                postFirebaseModel.getImage(imageId) { uri ->
-                    Picasso.get().load(uri).into(binding.imageViewPostImage)
-                }
+            post.userProfileImage?.let { imageUrl ->
+                Picasso.get().load(imageUrl)
+                    .placeholder(R.drawable.profile_logo)
+                    .into(binding.imageViewUserProfile)
+            }
+
+            post.postImage?.let { imageUrl ->
+                Picasso.get().load(imageUrl)
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(binding.imageViewPostImage)
             }
         }
     }
+
 }
