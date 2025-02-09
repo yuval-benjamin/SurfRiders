@@ -3,7 +3,6 @@ package com.example.SurfRiders.modules.editProfile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.Fragment
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,14 +14,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresExtension
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.surfriders.R
 import com.example.surfriders.databinding.FragmentEditProfileBinding
 import com.squareup.picasso.Picasso
 
-
 class EditProfile : Fragment() {
+
     private lateinit var root: View
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +31,7 @@ class EditProfile : Fragment() {
     private val imageSelectionLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             try {
+                Log.d("DEBUG", "Inside Edit Profile - imageSelectionLauncher")
                 val imageUri: Uri = result.data?.data!!
                 val imageSize = getImageSize(imageUri)
                 val maxCanvasSize = 5 * 1024 * 1024 // 5MB
@@ -69,7 +70,26 @@ class EditProfile : Fragment() {
     @RequiresExtension(extension = Build.VERSION_CODES.R, version = 2)
     private fun setUI() {
         viewModel.loadUser()
-        println(viewModel.user.value)
+
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                binding.editTextFirstName.setText(user.firstName)
+                binding.editTextLastName.setText(user.lastName)
+
+                if (viewModel.selectedImageURI.value == null) {
+                    user.profileImageUrl?.let { url ->
+                        Picasso.get().load(url).into(binding.profilePicButton)
+                    }
+                }
+
+            } else {
+                Log.d("EditProfile", "User data is null")
+                binding.editTextFirstName.text?.clear()
+                binding.editTextLastName.text?.clear()
+                binding.profilePicButton.setImageResource(R.drawable.profile_logo) // Replace with your placeholder
+            }
+        }
+
         binding.editTextFirstName.addTextChangedListener {
             viewModel.firstName = it.toString().trim()
         }
@@ -77,13 +97,11 @@ class EditProfile : Fragment() {
             viewModel.lastName = it.toString().trim()
         }
 
-        viewModel.user.observe(viewLifecycleOwner) { user ->
-            binding.editTextFirstName.setText(user.firstName)
-            binding.editTextLastName.setText(user.lastName)
-        }
 
         viewModel.selectedImageURI.observe(viewLifecycleOwner) { uri ->
-            Picasso.get().load(uri).into(binding.profilePicButton)
+            if(uri != null) {
+                Picasso.get().load(uri).into(binding.profilePicButton)
+            }
         }
 
         viewModel.firstNameError.observe(viewLifecycleOwner) {
@@ -111,8 +129,6 @@ class EditProfile : Fragment() {
         binding.profilePicButton.setOnClickListener {
             defineImageSelectionCallBack()
         }
-
-
     }
 
     @SuppressLint("Recycle")
@@ -123,10 +139,7 @@ class EditProfile : Fragment() {
 
     @RequiresExtension(extension = Build.VERSION_CODES.R, version = 2)
     private fun defineImageSelectionCallBack() {
-        binding.profilePicButton.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
-            imageSelectionLauncher.launch(intent)
-        }
+        val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+        imageSelectionLauncher.launch(intent)
     }
-
 }
