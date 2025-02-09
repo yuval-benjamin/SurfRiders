@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.surfriders.R
 import com.example.surfriders.data.post.Post
 import com.example.surfriders.databinding.ItemPostBinding
+import com.example.surfriders.databinding.MyItemPostBinding
 import com.squareup.picasso.Picasso
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -22,7 +23,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = MyItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding)
     }
 
@@ -33,7 +34,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun getItemCount(): Int = posts.size
 
-    inner class PostViewHolder(private val binding: ItemPostBinding) :
+    inner class PostViewHolder(private val binding: MyItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
