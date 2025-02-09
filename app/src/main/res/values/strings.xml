@@ -33,4 +33,6 @@
     <string name="pick_post_picture">pick post picture</string>
     <string name="post_image">Post image</string>
     <string name="post">post</string>
+    <string name="username">Username</string>
+    <string name="user_profile_image">User Profile Image</string>
 </resources>

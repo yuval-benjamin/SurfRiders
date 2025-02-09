@@ -52,7 +52,7 @@ class PostFirebaseModel {
         imageRef.putFile(selectedImageUri)
             .addOnSuccessListener {
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    callback(uri)  // Return the image URI after the upload is successful
+                    callback(uri)
                 }
             }
             .addOnFailureListener { exception ->

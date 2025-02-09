@@ -36,15 +36,12 @@ class PostModel private constructor() {
 
 
     fun addPost(post: Post, selectedImageUri: Uri, callback: () -> Unit) {
-        // Upload the image first
-        firebaseModel.addPostImage(post.id, selectedImageUri) { imageUri ->
-            val updatedPost = post.copy(postImage = imageUri.toString())
 
-            firebaseModel.addPost(updatedPost) {
+        firebaseModel.addPost(post) {
+            firebaseModel.addPostImage(post.id, selectedImageUri) {
                 refreshAllPosts()
                 callback()
             }
         }
     }
-
 }

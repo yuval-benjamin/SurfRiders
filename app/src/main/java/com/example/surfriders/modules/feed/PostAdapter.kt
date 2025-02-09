@@ -3,20 +3,16 @@ package com.example.surfriders.modules.feed
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.surfriders.R
 import com.example.surfriders.data.post.Post
-import com.example.surfriders.data.post.PostFirebaseModel
 import com.example.surfriders.databinding.ItemPostBinding
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private val posts: MutableList<Post> = mutableListOf()
-    private val postFirebaseModel = PostFirebaseModel()
 
     @SuppressLint("NotifyDataSetChanged")
     fun updatePosts(newPosts: List<Post>) {
@@ -25,7 +21,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         posts.addAll(newPosts)
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,13 +38,18 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
+            Log.d("PostAdapter", "Binding post: ${post.id}, Username: ${post.username}, Profile Image: ${post.userProfileImage}")
             binding.textViewPost.text = post.text
             binding.ratingBar.rating = post.grade.toFloat()
             binding.textViewLocation.text = post.locationName
+            binding.textViewUsername.text = post.username ?: "Unknown User"
 
-            Log.d("PostAdapter", "Image ID: ${post.postImage}")
+            post.userProfileImage?.let { imageUrl ->
+                Picasso.get().load(imageUrl)
+                    .placeholder(R.drawable.profile_logo)
+                    .into(binding.imageViewUserProfile)
+            }
 
-            // Check if the post image URL is valid
             post.postImage?.let { imageUrl ->
                 Picasso.get().load(imageUrl)
                     .placeholder(R.drawable.placeholder_image)
@@ -57,4 +57,5 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
             }
         }
     }
+
 }

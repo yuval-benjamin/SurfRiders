@@ -12,16 +12,21 @@ import java.io.Serializable
 @Entity
 data class Post(
     @PrimaryKey
-    val id: String,
-    val text: String,
-    val grade: Int,
-    val userId: String,
-    val locationId: String,
-    val locationName: String,
+    var id: String,
+    var text: String,
+    var grade: Int,
+    var userId: String,
+    var locationId: String,
+    var locationName: String,
     var isDeleted: Boolean = false,
     var postImage: String? = null,
     var timestamp: Long? = null,
-) : Serializable {
+    @Transient var username: String? = null,
+    @Transient var userProfileImage: String? = null,
+
+
+    ) : Serializable {
+    constructor() : this("", "", 0, "", "", "", false, null, null)
 
     companion object {
         var lastUpdated: Long
