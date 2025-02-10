@@ -47,7 +47,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:autofillHints="Your Post"
-            android:hint="@string/create_post"
+            android:hint="@string/edit_post"
             android:inputType="textMultiLine" />
 
         <TextView
@@ -58,30 +58,29 @@
             android:text="@string/enter_grade"
             android:textSize="16sp" />
 
-<!--        <EditText-->
-<!--            android:id="@+id/editTextGrade"-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:autofillHints="Your Grade"-->
-<!--            android:hint="@string/enter_grade"-->
-<!--            android:inputType="number" />-->
-
+        <!--        <EditText-->
+        <!--            android:id="@+id/editTextGrade"-->
+        <!--            android:layout_width="300dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:autofillHints="Your Grade"-->
+        <!--            android:hint="@string/enter_grade"-->
+        <!--            android:inputType="number" />-->
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1"
-            android:rating="0"
             android:layout_marginTop="8dp"
-            android:isIndicator="false" />
+            android:isIndicator="false"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="1" />
 
         <Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/submit_post" />
+            android:text="@string/edit_post" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancelButton"

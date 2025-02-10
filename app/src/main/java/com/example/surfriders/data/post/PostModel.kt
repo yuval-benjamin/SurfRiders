@@ -19,6 +19,24 @@ class PostModel private constructor() {
         return database.postDao().getAllPosts()
     }
 
+    fun getPost(postId: String, callback: (Post?) -> Unit) {
+        val postFromDb = database.postDao().getPostById(postId)
+
+        if (postFromDb != null) {
+            callback(postFromDb)
+        } else {
+            firebaseModel.getPost(postId) { post ->
+                post?.let {
+                    postsExecutor.execute {
+                        database.postDao().insertPost(it)
+                    }
+                }
+                callback(post)
+            }
+        }
+    }
+
+
     fun refreshAllPosts() {
         firebaseModel.getUserPosts { list ->
             var time = Post.lastUpdated  // Keep track of the latest timestamp
@@ -31,6 +49,20 @@ class PostModel private constructor() {
                 }
                 Post.lastUpdated = time  // Update the lastUpdated value
             }
+        }
+    }
+
+    fun updatePost(post: Post?, callback: () -> Unit) {
+        firebaseModel.updatePost(post) {
+            refreshAllPosts()
+            callback()
+        }
+    }
+
+    fun updatePostImage(postId: String, selectedImageUri: Uri, callback: () -> Unit) {
+        firebaseModel.addPostImage(postId, selectedImageUri) {
+            refreshAllPosts()
+            callback()
         }
     }
 

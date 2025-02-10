@@ -70,7 +70,7 @@ class LocationFragment : Fragment() {
         }
 
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainerView.id, addPostFragment)
+            .replace(binding.fragmentLocationView.id, addPostFragment)
             .addToBackStack(null)
             .commit()
     }

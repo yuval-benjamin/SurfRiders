@@ -1,7 +1,6 @@
 package com.example.surfriders.modules.feed
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import com.example.surfriders.data.post.Post
 import com.example.surfriders.databinding.ItemPostBinding
 import com.squareup.picasso.Picasso
 
-class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class FeedAdapter : RecyclerView.Adapter<FeedAdapter.PostViewHolder>() {
 
     private val posts: MutableList<Post> = mutableListOf()
 

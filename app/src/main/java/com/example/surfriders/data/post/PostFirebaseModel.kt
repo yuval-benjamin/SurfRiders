@@ -25,6 +25,21 @@ class PostFirebaseModel {
         db.firestoreSettings = settings
     }
 
+    fun getPost(postId: String, callback: (Post?) -> Unit) {
+        db.collection(POSTS_COLLECTION_PATH)
+            .document(postId)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful && it.result != null) {
+                    val post = it.result!!.data?.let { it1 -> Post.fromJSON(it1) }
+                    callback(post)
+                } else {
+                    callback(null)
+                }
+            }
+    }
+
+
     fun getAllPosts(callback: (List<Post>) -> Unit) {
         db.collection(POSTS_COLLECTION_PATH)
             .get()
@@ -96,6 +111,36 @@ class PostFirebaseModel {
             }
             .addOnFailureListener { exception ->
                 Log.e("PostFirebaseModel", "Error adding post: ${exception.message}")
+            }
+    }
+
+    fun deletePost(postId: String, callback: (Boolean) -> Unit) {
+        val postRef = db.collection(POSTS_COLLECTION_PATH).document(postId)
+        val imageRef = storage.reference.child("images/$POSTS_COLLECTION_PATH/$postId")
+        postRef.delete()
+            .addOnSuccessListener {
+                Log.d("RONNE", "trying to delete image")
+                imageRef.delete()
+                    .addOnSuccessListener {
+                        callback(true) // Post and image deleted successfully
+                    }
+                    .addOnFailureListener {
+                        callback(false) // Failed to delete the image
+                    }
+            }
+            .addOnFailureListener {
+                callback(false) // Failed to delete the post
+            }
+    }
+
+    fun updatePost(post: Post?, callback: () -> Unit) {
+        db.collection(POSTS_COLLECTION_PATH)
+            .document(post!!.id).update(post.updateJson)
+            .addOnSuccessListener {
+                callback()
+            }
+            .addOnFailureListener {
+                Log.d("Error", "Can't update this post document: " + it.message)
             }
     }
 }

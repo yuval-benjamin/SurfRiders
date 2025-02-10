@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,50 +8,81 @@
         android:id="@+id/feed"
         android:name="com.example.surfriders.modules.feed.Feed"
         android:label="fragment_feed"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/fragment_feed" />
 
     <fragment
         android:id="@+id/edit_profile"
-        android:name="com.example.SurfRiders.modules.editProfile.EditProfile"
+        android:name="com.example.surfriders.modules.editProfile.EditProfile"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" >
+        tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_edit_profile_to_profile"
             app:destination="@id/profile" />
     </fragment>
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/searchFragment"-->
-    <!--        android:name="com.example.surfriders.modules.search.SearchFragment"-->
-    <!--        android:label="fragment_search"-->
-    <!--        tools:layout="@layout/fragment_search" >-->
-    <!--        <action-->
-    <!--            android:id="@+id/action_searchFragment_to_cocktailFragment"-->
-    <!--            app:destination="@id/postsFragment" />-->
-    <!--    </fragment>-->
-
     <fragment
         android:id="@+id/profile"
-        android:name="com.example.SurfRiders.modules.profile.Profile"
+        android:name="com.example.surfriders.modules.profile.Profile"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/edit_profile" />
-                <action
-                    android:id="@+id/myPosts"
-                    app:destination="@id/myPosts" />
+        <action
+            android:id="@+id/myPosts"
+            app:destination="@id/myPosts" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.example.surfriders.modules.post.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post">
+
+        <action
+            android:id="@+id/action_addPostFragment_to_surfFragment"
+            app:destination="@id/surfFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/myPosts"
-        android:name="com.example.surfriders.modules.myPosts.myPosts"
+        android:name="com.example.surfriders.modules.myPosts.MyPosts"
         android:label="fragment_my_posts"
-        tools:layout="@layout/fragment_my_posts" >
+        tools:layout="@layout/fragment_my_posts">
         <action
             android:id="@+id/action_my_profile_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/actionMyPostsToUpdatePostFragment"
+            app:destination="@id/editPostFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.surfriders.modules.post.EditPostFragment"
+        android:label="fragment_fragment_edit_posts"
+        tools:layout="@layout/fragment_edit_post">
+        <argument
+            android:name="postId"
+            app:argType="string" />
+        <argument
+            android:name="locationId"
+            app:argType="string" />
+        <argument
+            android:name="locationName"
+            app:argType="string" />
+        <argument
+            android:name="postText"
+            app:argType="string" />
+        <argument
+            android:name="grade"
+            app:argType="integer" />
+        <argument
+            android:name="postImageUri"
+            app:argType="string" />
+
     </fragment>
 
     <fragment

@@ -1,5 +1,5 @@
-package com.example.SurfRiders.modules.editProfile
 
+package com.example.surfriders.modules.editProfile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -69,7 +69,6 @@ class EditProfile : Fragment() {
     @RequiresExtension(extension = Build.VERSION_CODES.R, version = 2)
     private fun setUI() {
         viewModel.loadUser()
-        println(viewModel.user.value)
         binding.editTextFirstName.addTextChangedListener {
             viewModel.firstName = it.toString().trim()
         }

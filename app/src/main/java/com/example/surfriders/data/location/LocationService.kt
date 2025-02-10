@@ -15,26 +15,6 @@ const val category = "beach"
 const val filter =
     "rect:33.91785157181864,32.75367877479448,35.45181884850199,31.525585493928073"  // for israel beach near Tel Aviv
 
-//interface GeoapifyService {
-//    @GET("places")
-//    suspend fun getBeaches(
-//        @Query("categories") categories: String = "beach",
-//        @Query("filter") filter: String,
-//        @Query("limit") limit: Int = 20,
-//        @Query("apiKey") apiKey: String
-//    ): GeoapifyResponse
-//}
-//
-//interface UnsplashService {
-//    @GET("search/photos")
-//    suspend fun searchImages(
-//        @Query("query") query: String,  // The location name (e.g., beach name or city)
-//        @Query("client_id") apiKey: String  // Unsplash API key
-//    ): UnsplashResponse
-//}
-
-//const val UNSPLASH_API_SECRET= "gbZNEMeufyF3HSWaGi3GgnOs2NOTJHdL447Erbh67TU"
-
 
 class LocationService {
     companion object {

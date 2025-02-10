@@ -48,12 +48,16 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
                     userFirebaseModel.getImage(user.id) { uri: Uri ->
                         post.username = "${user.firstName} ${user.lastName}"
                         post.userProfileImage = uri.toString()
-                        updatedPosts.add(post)
 
-                        remainingRequests--
-                        if (remainingRequests == 0) {
-                            _posts.value = updatedPosts
-                            _isLoading.value = false
+                        postFirebaseModel.getImage(post.id) { postImage ->
+                            post.postImage = postImage.toString() // Make sure image updates
+                            updatedPosts.add(post)
+
+                            remainingRequests--
+                            if (remainingRequests == 0) {
+                                _posts.value = updatedPosts
+                                _isLoading.value = false
+                            }
                         }
                     }
                 }

@@ -100,11 +100,18 @@ data class Post(
             )
         }
 
-    val updateJson: Map<String, Any>
+    val updateJson: HashMap<String, Any?>
         get() {
             return hashMapOf(
+                ID_KEY to id,
+                TEXT_KEY to text,
+                USER_ID_KEY to userId,
+                LOCATION_ID_KEY to locationId,
+                LOCATION_NAME_KEY to locationName,
                 GRADE_KEY to grade,
+                POST_IMAGE_KEY to postImage,
                 LAST_UPDATED_KEY to FieldValue.serverTimestamp(),
+
             )
         }
 }

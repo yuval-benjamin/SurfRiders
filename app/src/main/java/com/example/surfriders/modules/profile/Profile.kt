@@ -1,4 +1,4 @@
-package com.example.SurfRiders.modules.profile
+package com.example.surfriders.modules.profile
 
 import android.content.Intent
 import android.os.Bundle

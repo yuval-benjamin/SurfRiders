@@ -11,7 +11,10 @@ import com.example.surfriders.databinding.ItemPostBinding
 import com.example.surfriders.databinding.MyItemPostBinding
 import com.squareup.picasso.Picasso
 
-class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(
+    private val onDeleteClick: (Post) -> Unit,
+    private val onUpdateClick: (Post) -> Unit
+) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private val posts: MutableList<Post> = mutableListOf()
 
@@ -54,7 +57,16 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
                     .placeholder(R.drawable.placeholder_image)
                     .into(binding.imageViewPostImage)
             }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(post)
+            }
+
+            binding.btnUpdate.setOnClickListener {
+                onUpdateClick(post)
+            }
         }
+
     }
 
 }

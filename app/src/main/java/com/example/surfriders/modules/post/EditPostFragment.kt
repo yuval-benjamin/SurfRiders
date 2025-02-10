@@ -1,5 +1,6 @@
 package com.example.surfriders.modules.post
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,41 +12,68 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.example.surfriders.R
-import com.example.surfriders.databinding.FragmentAddPostBinding
+import com.example.surfriders.databinding.FragmentEditPostBinding
+import com.squareup.picasso.Picasso
 
-class AddPostFragment : Fragment() {
+class EditPostFragment : Fragment() {
 
     private lateinit var viewModel: AddPostViewModel
     private var locationId: String? = null
     private var locationName: String? = null
+    private var existingImageUrl: String? = null // Store the existing image URL
+    private var isNewImageSelected = false // Track if a new image is selected
 
     private lateinit var imageSelectionLauncher: ActivityResultLauncher<Intent>
-    private lateinit var binding: FragmentAddPostBinding
+    private lateinit var binding: FragmentEditPostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         locationId = arguments?.getString("locationId")
         locationName = arguments?.getString("locationName")
+        existingImageUrl = arguments?.getString("postImageUri") // Get the existing image URL
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddPostBinding.inflate(inflater, container, false)
+        // Initialize ViewBinding
+        binding = FragmentEditPostBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize ViewModel
         viewModel = ViewModelProvider(this)[AddPostViewModel::class.java]
 
+
+        locationName?.let {
+            binding.textViewPost.text = "Editing post for: $it"
+        }
+
+        arguments?.getString("postText")?.let {
+            binding.editTextPost.setText(it)
+        }
+
+        arguments?.getInt("grade")?.let {
+            binding.ratingBar.rating = it.toFloat()
+        }
+
+        existingImageUrl.let {
+            Picasso.get().load(it)
+                .placeholder(R.drawable.profile_logo)
+                .into(binding.buttonSelectImage)
+        }
+
+        // Define image selection callback
         defineImageSelectionCallBack()
 
         binding.buttonSelectImage.setOnClickListener {
@@ -54,42 +82,67 @@ class AddPostFragment : Fragment() {
             imageSelectionLauncher.launch(intent)
         }
 
+//        binding.cancelButton.setOnClickListener {
+//
+//            Navigation.findNavController(requireView())
+//                .navigate(R.id.action_addPostFragment_to_surfFragment)
+//        }
+
         binding.buttonSubmit.setOnClickListener {
             val postText = binding.editTextPost.text.toString().trim()
+            val rating = binding.ratingBar.rating.toInt()
 
             // Validate inputs
             if (postText.isEmpty()) {
-                Toast.makeText(requireContext(), "Post text cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Post text cannot be empty", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
-            val grade = binding.ratingBar.rating.toInt()
-
-            if (grade == 0) {
-                Toast.makeText(requireContext(), "Please rate the post", Toast.LENGTH_SHORT).show()
+            if (rating == 0) {
+                Toast.makeText(requireContext(), "Grade cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (viewModel.imageURI.value == null) {
-                Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
 
             viewModel.locationName = locationName ?: ""
             viewModel.postText = postText
-            viewModel.grade = grade
+            viewModel.grade = rating
+
+            viewModel.existingImageUrl = existingImageUrl
+
+            if (isNewImageSelected) {
+                if (viewModel.imageURI.value == null) {
+                    Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT)
+                        .show()
+                    return@setOnClickListener
+                }
+            } else {
+                viewModel.imageURI.value = null
+            }
+//            arguments?.getString("postImageUri")?.let { imageUriString ->
+//                val uri = Uri.parse(imageUriString)
+//                viewModel.imageURI.value = uri
+//            }
+
 
             locationId?.let { id ->
-                viewModel.savePost(null, id, {
-                    // Created
-                    requireActivity().supportFragmentManager.popBackStack()
+                viewModel.savePost(arguments?.getString("postId"), id, {
+                    requireActivity().runOnUiThread {
+                        setFragmentResult("postUpdated", Bundle())
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
                 }, {
                     // Updated
-                    requireActivity().supportFragmentManager.popBackStack()
+                    if (isAdded) {
+                        setFragmentResult("postUpdated", Bundle()) // Notify MyPosts to refresh
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
                 })
             }
         }
     }
+
 
     private fun defineImageSelectionCallBack() {
         imageSelectionLauncher =
@@ -108,9 +161,10 @@ class AddPostFragment : Fragment() {
                     } else {
                         viewModel.imageURI.postValue(imageUri)
                         binding.buttonSelectImage.setImageURI(imageUri)
+                        isNewImageSelected = true
                     }
                 } catch (e: Exception) {
-                    Log.d("AddPostFragment", "Error selecting image: $e")
+                    Log.d("EditPostFragment", "Error selecting image: $e")
                     Toast.makeText(requireContext(), "Error selecting image", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -124,7 +178,7 @@ class AddPostFragment : Fragment() {
             size = inputStream?.available()?.toLong() ?: 0L
             inputStream?.close()
         } catch (e: Exception) {
-            Log.d("AddPostFragment", "Error getting file size: $e")
+            Log.d("EditPostFragment", "Error getting file size: $e")
         }
         return size
     }

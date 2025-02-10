@@ -1,4 +1,4 @@
-package com.example.SurfRiders.modules.editProfile
+package com.example.surfriders.modules.editProfile
 
 import android.net.Uri
 import android.util.Log
@@ -17,7 +17,7 @@ class EditProfileViewModel : ViewModel() {
     var selectedImageURI: MutableLiveData<Uri> = MutableLiveData()
     var user: LiveData<User> = UserModel.instance.getCurrentUser()
     //
-    var firstName: String? = "yosi"
+    var firstName: String? = "ronen"
     var lastName: String? = null
     var firstNameError = MutableLiveData("")
     var lastNameError = MutableLiveData("")

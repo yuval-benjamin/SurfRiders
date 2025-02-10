@@ -36,4 +36,7 @@
     <string name="username">Username</string>
     <string name="user_profile_image">User Profile Image</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="edit_post">Edit Post</string>
 </resources>

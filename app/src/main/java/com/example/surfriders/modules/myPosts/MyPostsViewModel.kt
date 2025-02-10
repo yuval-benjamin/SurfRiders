@@ -7,9 +7,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.surfriders.data.post.Post
 import com.example.surfriders.data.post.PostFirebaseModel
+import com.example.surfriders.data.post.PostModel
 import com.example.surfriders.data.user.UserFirebaseModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
-class myPostsViewModel(application: Application) : AndroidViewModel(application) {
+class MyPostsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val postFirebaseModel = PostFirebaseModel()
     private val userFirebaseModel = UserFirebaseModel()
@@ -20,9 +23,24 @@ class myPostsViewModel(application: Application) : AndroidViewModel(application)
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _postDeleted = MutableLiveData<Boolean>()
+    val postDeleted: LiveData<Boolean> get() = _postDeleted
+
     init {
         fetchPostsWithUsers()
     }
+
+    fun deletePost(postId: String) {
+        _isLoading.value = true
+        postFirebaseModel.deletePost(postId) { success ->
+            if (success) {
+                _postDeleted.postValue(true)
+                refreshPosts()  // Refresh the list after deletion
+            }
+            _isLoading.value = false
+        }
+    }
+
 
     private fun fetchPostsWithUsers() {
         _isLoading.value = true
@@ -59,6 +77,7 @@ class myPostsViewModel(application: Application) : AndroidViewModel(application)
             }
         }
     }
+
 
     fun refreshPosts() {
         fetchPostsWithUsers()
