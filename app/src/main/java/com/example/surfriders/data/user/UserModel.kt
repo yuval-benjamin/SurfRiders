@@ -25,9 +25,15 @@ class UserModel private constructor() {
     }
 
     fun getCurrentUser(): LiveData<User> {
-        Log.i("UserModel", "getCurrentUser: ${Firebase.auth.currentUser?.uid}")
-        Log.i("UserModel", "getCurrentUser: ${Firebase.auth.currentUser?.uid}")
-        return database.userDao().getUserById(Firebase.auth.currentUser?.uid!!)
+        val userLiveData = database.userDao().getUserById(Firebase.auth.currentUser?.uid!!)
+        userLiveData.observeForever { user ->
+            if (user == null) {
+                Log.e("UserModel", "User not found in local database!")
+            } else {
+                Log.d("UserModel", "User found: ${user.firstName} ${user.lastName}")
+            }
+        }
+        return userLiveData
     }
 
     private fun refreshAllUsers() {

@@ -8,28 +8,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="addPostFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_addPostFragment_to_surfFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="editPostFragment">
+                  <entry key="M">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -74,32 +53,6 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="myPosts">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="actionMyPostsToUpdatePostFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_my_profile_to_profile">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="profile">
                     <value>
                       <LayoutPositions>
@@ -116,7 +69,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="myPosts">
+                            <entry key="action_profile_to_myposts">
                               <value>
                                 <LayoutPositions />
                               </value>

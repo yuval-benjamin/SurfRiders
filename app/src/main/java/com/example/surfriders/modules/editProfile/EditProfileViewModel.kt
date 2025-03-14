@@ -63,6 +63,43 @@ class EditProfileViewModel : ViewModel() {
         }
     }
 
+
+//    fun updateUser(updatedUserCallback: () -> Unit) {
+//        if (validateUserUpdate()) {
+//            val updatedUser = User(userId, firstName!!, lastName!!)
+//
+//            UserModel.instance.updateUser(updatedUser) {
+//                if (imageChanged) {
+//                    uploadImageToFirebase { imageUrl ->
+//                        val profileUpdates = UserProfileChangeRequest.Builder()
+//                            .setPhotoUri(Uri.parse(imageUrl))
+//                            .setDisplayName("$firstName $lastName")
+//                            .build()
+//
+//                        Firebase.auth.currentUser!!.updateProfile(profileUpdates)
+//                            .addOnSuccessListener {
+//                                updatedUserCallback()
+//                            }
+//                    }
+//                } else {
+//                    updatedUserCallback()
+//                }
+//            }
+//        }
+//    }
+//
+//    // Uploads image to Firebase Storage and gets the public URL
+//    private fun uploadImageToFirebase(onSuccess: (String) -> Unit) {
+//        val storageRef = Firebase.storage.reference.child("profile_pictures/$userId.jpg")
+//        selectedImageURI.value?.let { uri ->
+//            storageRef.putFile(uri).addOnSuccessListener {
+//                storageRef.downloadUrl.addOnSuccessListener { imageUrl ->
+//                    onSuccess(imageUrl.toString())
+//                }
+//            }
+//        }
+//    }
+
     private fun validateUserUpdate(
     ): Boolean {
         if (firstName!!.isEmpty()) {

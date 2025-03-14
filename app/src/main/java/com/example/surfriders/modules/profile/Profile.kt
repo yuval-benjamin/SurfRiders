@@ -46,7 +46,7 @@ class Profile : Fragment() {
         }
 
         root.findViewById<Button>(R.id.MyPostsButton).setOnClickListener {
-            Navigation.findNavController(root).navigate(R.id.myPosts)
+            Navigation.findNavController(root).navigate(R.id.action_profile_to_myposts)
         }
         root.findViewById<Button>(R.id.EditProfileButton).setOnClickListener {
             Navigation.findNavController(root).navigate(R.id.action_profile_to_edit_profile)
