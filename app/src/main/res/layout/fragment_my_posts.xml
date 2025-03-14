@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Cancel Button at the top left -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
@@ -15,16 +14,19 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:layout_margin="8dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"/>
 
-    <!-- SwipeRefreshLayout that takes the rest of the screen -->
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        android:layout_below="@id/cancelButton"> <!-- Ensures it's below the cancel button -->
+        android:layout_below="@id/cancelButton">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFeed"

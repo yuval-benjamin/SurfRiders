@@ -68,7 +68,6 @@ class MyPosts : Fragment() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             myPostsViewModel.refreshPosts()
         }
-        Log.d("MyPostsFragment", "Here")
 
         setFragmentResultListener("postUpdated") { _, _ ->
             myPostsViewModel.refreshPosts() // Refresh posts when an update occurs
@@ -80,11 +79,10 @@ class MyPosts : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("MyPostsFragment", "On view created")
         binding.cancelButton.invalidate()
 
         binding.cancelButton.setOnClickListener {
-            Log.d("MyPostsFragment", "Cancel button clicked")
+            Log.d("MyPosts", "Cancel button clicked")
             findNavController().navigate(R.id.action_my_posts_to_profile)
         }
     }
