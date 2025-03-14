@@ -54,6 +54,11 @@ class AddPostFragment : Fragment() {
             imageSelectionLauncher.launch(intent)
         }
 
+        binding.cancelButton.setOnClickListener {
+            Log.d("AddPost", "Cancel button clicked")
+            findNavController().navigate(R.id.action_addPostFragment_to_surfFragment)
+        }
+
         binding.buttonSubmit.setOnClickListener {
             val postText = binding.editTextPost.text.toString().trim()
 
