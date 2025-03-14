@@ -84,6 +84,9 @@
         <argument
             android:name="postImageUri"
             app:argType="string" />
+        <action
+            android:id="@+id/action_editPost_to_MyPosts"
+            app:destination="@id/myPostsFragment" />
     </fragment>
 
     <fragment
