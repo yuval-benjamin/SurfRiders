@@ -79,10 +79,14 @@
             app:argType="string" />
         <argument
             android:name="grade"
+            android:defaultValue="0"
             app:argType="integer" />
         <argument
             android:name="postImageUri"
             app:argType="string" />
+        <action
+            android:id="@+id/action_editPost_to_MyPosts"
+            app:destination="@id/myPostsFragment" />
     </fragment>
 
     <fragment
@@ -90,4 +94,7 @@
         android:name="com.example.surfriders.modules.location.LocationFragment"
         android:label="Surf"
         tools:layout="@layout/fragment_location" />
+    <action
+        android:id="@+id/action_surfFragment_to_addPostFragment"
+        app:destination="@id/addPostFragment" />
 </navigation>

@@ -11,7 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.surfriders.databinding.FragmentLocationBinding
 import com.example.surfriders.data.location.Location
-import com.example.surfriders.modules.post.AddPostFragment
+import androidx.navigation.fragment.findNavController
+import com.example.surfriders.R
 
 class LocationFragment : Fragment() {
 
@@ -65,14 +66,17 @@ class LocationFragment : Fragment() {
             putString("locationName", location.name)
         }
 
-        val addPostFragment = AddPostFragment().apply {
-            arguments = bundle
-        }
+        findNavController().navigate(R.id.action_surfFragment_to_addPostFragment, bundle)
 
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentLocationView.id, addPostFragment)
-            .addToBackStack(null)
-            .commit()
+
+//        val addPostFragment = AddPostFragment().apply {
+//            arguments = bundle
+//        }
+//
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(binding.fragmentLocationView.id, addPostFragment)
+//            .addToBackStack(null)
+//            .commit()
     }
 
     override fun onDestroyView() {

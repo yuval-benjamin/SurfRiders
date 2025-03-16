@@ -81,8 +81,11 @@ class EditPostFragment : Fragment() {
             imageSelectionLauncher.launch(intent)
         }
 
+        binding.cancelButton.invalidate()
+
         binding.cancelButton.setOnClickListener {
-            findNavController().navigate(R.id.action_edit_profile_to_profile)
+            Log.d("EditPost", "Cancel button clicked")
+            findNavController().navigate(R.id.action_editPost_to_MyPosts)
         }
 
         binding.buttonSubmit.setOnClickListener {
