@@ -8,7 +8,8 @@
         android:id="@+id/feed"
         android:name="com.example.surfriders.modules.feed.Feed"
         android:label="fragment_feed"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed">
+    </fragment>
 
     <fragment
         android:id="@+id/edit_profile"
@@ -29,9 +30,10 @@
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/edit_profile" />
+
         <action
-            android:id="@+id/myPosts"
-            app:destination="@id/myPosts" />
+            android:id="@+id/action_profile_to_myposts"
+            app:destination="@id/myPostsFragment" />
     </fragment>
 
     <fragment
@@ -39,24 +41,23 @@
         android:name="com.example.surfriders.modules.post.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post">
-
         <action
             android:id="@+id/action_addPostFragment_to_surfFragment"
             app:destination="@id/surfFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/myPosts"
+        android:id="@+id/myPostsFragment"
         android:name="com.example.surfriders.modules.myPosts.MyPosts"
         android:label="fragment_my_posts"
         tools:layout="@layout/fragment_my_posts">
         <action
-            android:id="@+id/action_my_profile_to_profile"
+            android:id="@+id/action_my_posts_to_profile"
             app:destination="@id/profile" />
+
         <action
             android:id="@+id/actionMyPostsToUpdatePostFragment"
             app:destination="@id/editPostFragment" />
-
     </fragment>
 
     <fragment
@@ -82,7 +83,6 @@
         <argument
             android:name="postImageUri"
             app:argType="string" />
-
     </fragment>
 
     <fragment

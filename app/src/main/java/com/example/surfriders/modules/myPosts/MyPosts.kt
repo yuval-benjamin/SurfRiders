@@ -2,13 +2,16 @@ package com.example.surfriders.modules.myPosts
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.surfriders.R
@@ -25,6 +28,7 @@ class MyPosts : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentMyPostsBinding.inflate(inflater, container, false)
 
         binding.recyclerViewFeed.layoutManager = LinearLayoutManager(context)
@@ -64,10 +68,7 @@ class MyPosts : Fragment() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             myPostsViewModel.refreshPosts()
         }
-
-        binding.cancelButton.setOnClickListener {
-            findNavController().navigate(R.id.action_my_profile_to_profile)
-        }
+        Log.d("MyPostsFragment", "Here")
 
         setFragmentResultListener("postUpdated") { _, _ ->
             myPostsViewModel.refreshPosts() // Refresh posts when an update occurs
@@ -75,4 +76,18 @@ class MyPosts : Fragment() {
 
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Log.d("MyPostsFragment", "On view created")
+        binding.cancelButton.invalidate()
+
+        binding.cancelButton.setOnClickListener {
+            Log.d("MyPostsFragment", "Cancel button clicked")
+            findNavController().navigate(R.id.action_my_posts_to_profile)
+        }
+    }
+
+
 }

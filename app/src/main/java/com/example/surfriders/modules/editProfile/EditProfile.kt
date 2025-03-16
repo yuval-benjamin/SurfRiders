@@ -58,7 +58,6 @@ class EditProfile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("EditProfile", "onCreateView: ")
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
@@ -77,8 +76,12 @@ class EditProfile : Fragment() {
         }
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
-            binding.editTextFirstName.setText(user.firstName)
-            binding.editTextLastName.setText(user.lastName)
+            if (user != null) {
+                binding.editTextFirstName.setText(user.firstName)
+                binding.editTextLastName.setText(user.lastName)
+            } else {
+                Log.e("EditProfile", "User is null!")
+            }
         }
 
         viewModel.selectedImageURI.observe(viewLifecycleOwner) { uri ->

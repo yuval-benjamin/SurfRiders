@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.surfriders.R
 import com.example.surfriders.databinding.FragmentEditPostBinding
 import com.squareup.picasso.Picasso
@@ -43,8 +44,6 @@ class EditPostFragment : Fragment() {
         // Initialize ViewBinding
         binding = FragmentEditPostBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -82,11 +81,9 @@ class EditPostFragment : Fragment() {
             imageSelectionLauncher.launch(intent)
         }
 
-//        binding.cancelButton.setOnClickListener {
-//
-//            Navigation.findNavController(requireView())
-//                .navigate(R.id.action_addPostFragment_to_surfFragment)
-//        }
+        binding.cancelButton.setOnClickListener {
+            findNavController().navigate(R.id.action_edit_profile_to_profile)
+        }
 
         binding.buttonSubmit.setOnClickListener {
             val postText = binding.editTextPost.text.toString().trim()
