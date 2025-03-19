@@ -143,4 +143,26 @@ class PostFirebaseModel {
                 Log.d("Error", "Can't update this post document: " + it.message)
             }
     }
+
+    fun searchPost(query: String, callback: (List<Post>) -> Unit) {
+        db.collection(POSTS_COLLECTION_PATH)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val posts = mutableListOf<Post>()
+                    val lowerQuery = query.lowercase()
+                    for (doc in task.result) {
+                        val post = Post.fromJSON(doc.data)
+                        if (post.text.lowercase().contains(lowerQuery) ||
+                            post.locationName.lowercase().contains(lowerQuery)
+                        ) {
+                            posts.add(post)
+                        }
+                    }
+                    callback(posts)
+                } else {
+                    callback(listOf())
+                }
+            }
+    }
 }
