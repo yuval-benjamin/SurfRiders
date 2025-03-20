@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/postDetailFragment"
-        android:name="com.example.surfriders.modules.search.PostDetailFragment"
+        android:name="com.example.surfriders.modules.postDetails.PostDetailFragment"
         android:label="Post Detail">
         <argument
             android:name="postId"

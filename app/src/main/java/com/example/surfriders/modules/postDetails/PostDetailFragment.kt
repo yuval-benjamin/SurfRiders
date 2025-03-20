@@ -1,4 +1,4 @@
-package com.example.surfriders.modules.search
+package com.example.surfriders.modules.postDetails
 
 import android.os.Bundle
 import android.util.Log
