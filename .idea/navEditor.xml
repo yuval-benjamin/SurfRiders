@@ -114,6 +114,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="postDetailFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="profile">
                     <value>
                       <LayoutPositions>
@@ -140,7 +152,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="sear">
+                  <entry key="searchFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -151,7 +163,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_edit_profile_to_profile">
+                            <entry key="action_searchFragment_to_postDetailFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_search_to_feed">
                               <value>
                                 <LayoutPositions />
                               </value>
