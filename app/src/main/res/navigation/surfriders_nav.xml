@@ -26,9 +26,22 @@
         android:name="com.example.surfriders.modules.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_searchFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
         <action
             android:id="@+id/action_search_to_feed"
             app:destination="@id/feed" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.surfriders.modules.search.PostDetailFragment"
+        android:label="Post Detail">
+        <argument
+            android:name="postId"
+            app:argType="string" />
     </fragment>
 
     <fragment
